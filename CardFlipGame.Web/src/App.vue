@@ -17,6 +17,13 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
+        <v-list-item link to="/About">
+          <template #prepend>
+            <v-icon>fas fa-comment</v-icon>
+          </template>
+          <v-list-item-title>About</v-list-item-title>
+        </v-list-item>
+
         <v-list-item link to="/coalesce-example">
           <template #prepend>
             <v-icon>fas fa-palette</v-icon>

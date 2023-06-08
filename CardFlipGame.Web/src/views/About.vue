@@ -2,14 +2,19 @@
   <v-container>
     <v-card>
       <v-card-item>
-        <v-card-title> About </v-card-title>
+        <v-card-title>About</v-card-title>
       </v-card-item>
       <v-card-text>
-        <span class="text-weight-bold"
-          ><v-icon icon="mdi mdi-shimmer" />The Team</span
-        >
+        <div class="pb-2">
+          This game is a result of a final project for a class at Eastern
+          Washington University.
+        </div>
+        <div class="font-weight-bold mb-2">
+          <v-icon size="small" color="blue" icon="fas fa-star" start />The Team
+        </div>
         <ul>
-          <li></li>
+          <li>Vera</li>
+          <li>Andrew</li>
           <li>Kelsey</li>
           <li>Tyler</li>
         </ul>
