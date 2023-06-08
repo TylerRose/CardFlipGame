@@ -6,8 +6,8 @@
       </v-card-item>
       <v-card-text>
         <div class="pb-2">
-          This game is a result of a final project for a class at Eastern
-          Washington University.
+          This game is a result of a final project for the .Net Web Application
+          #379 class at Eastern Washington University.
         </div>
         <div class="font-weight-bold mb-2">
           <v-icon size="small" color="blue" icon="fas fa-star" start />The Team
