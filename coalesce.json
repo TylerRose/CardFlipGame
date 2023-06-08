@@ -1,0 +1,16 @@
+{
+  "webProject": {
+    "projectFile": "./CardFlipGame.Web/CardFlipGame.Web.csproj"
+  },
+  "dataProject": {
+    "projectFile": "./CardFlipGame.Data/CardFlipGame.Data.csproj"
+  },
+
+  "rootGenerator": "Vue",
+
+  "generatorConfig": {
+    "Scripts": {
+      "targetDirectory": "../src"
+    }
+  }
+}
