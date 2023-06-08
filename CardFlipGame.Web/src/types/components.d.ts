@@ -20,6 +20,7 @@ declare module '@vue/runtime-core' {
     VAppBarNavIcon: typeof import('vuetify/components')['VAppBarNavIcon']
     VBtn: typeof import('vuetify/components')['VBtn']
     VCard: typeof import('vuetify/components')['VCard']
+    VCardItem: typeof import('vuetify/components')['VCardItem']
     VCardText: typeof import('vuetify/components')['VCardText']
     VCardTitle: typeof import('vuetify/components')['VCardTitle']
     VCol: typeof import('vuetify/components')['VCol']
