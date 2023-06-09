@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { CAdminEditorPage, CAdminTablePage } from "coalesce-vue-vuetify3";
 import Instructions from "./views/Instructions.vue";
+import GameBoard from "./views/GameBoard.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -11,9 +12,14 @@ export default createRouter({
       component: () => import("./views/Home.vue"),
     },
     {
-      path: "instructions",
+      path: "/instructions",
       name: "instructions",
       component: Instructions,
+    },
+    {
+      path: "/game",
+      name: "game",
+      component: GameBoard,
     },
     {
       path: "/coalesce-example",
