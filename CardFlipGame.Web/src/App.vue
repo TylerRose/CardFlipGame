@@ -30,6 +30,20 @@
           </template>
           <v-list-item-title>Admin Pages</v-list-item-title>
         </v-list-item>
+
+        <v-list-item link to="/instructions">
+          <template #prepend>
+            <v-icon>fas fa-book</v-icon>
+          </template>
+          <v-list-item-title>Instructions</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link to="/game">
+          <template #prepend>
+            <v-icon>fas fa-chess-rook</v-icon>
+          </template>
+          <v-list-item-title> Play Game </v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
