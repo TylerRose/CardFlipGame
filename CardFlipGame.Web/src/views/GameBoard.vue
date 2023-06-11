@@ -10,19 +10,11 @@
           elevation="2"
           @click="flip(card)"
           :class="getItemClass(index)"
-          v-if="!card.matched"
         >
-          <v-icon v-if="card.active"> {{ card.icon }} </v-icon>
-          <v-icon v-else> fas fa-question </v-icon>
-        </v-sheet>
-        <v-sheet
-          v-bind:style="{ height: deviceHeight * 0.15 + 'px' }"
-          width="50%"
-          height="100%"
-          color="grey lighten-2"
-          class="pa-4 text-center mx-auto d-flex flex-column align-center justify-center"
-          v-else
-        >
+          <div v-if="!card.matched">
+            <v-icon v-if="card.active"> {{ card.icon }} </v-icon>
+            <v-icon v-else> fas fa-question </v-icon>
+          </div>
         </v-sheet>
       </v-col>
     </v-row>
@@ -116,6 +108,7 @@ function flipCardsBack(matched: boolean = false) {
 }
 
 function getItemClass(index: number) {
+  if (cards.value[index].matched) return "matched";
   return cards.value[index].active ? "front" : "back";
 }
 </script>
@@ -129,5 +122,9 @@ have the icon and active state -->
 
 .back {
   background-color: #f44336;
+}
+
+.matched {
+  background-color: #b7b7b7;
 }
 </style>
