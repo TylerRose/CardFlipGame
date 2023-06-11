@@ -1,20 +1,28 @@
 <template>
   <v-container>
     <v-row class="flex-child text-subtitle-2">
-      <v-col class="v-col-3" v-for="(icon, index) in list" v-bind:key="index">
-        <!-- v-bind="flipped[index] ? { class: 'flip' } : {}" -->
+      <v-col class="v-col-3" v-for="(card, index) in cards" v-bind:key="index">
         <v-sheet
-          v-bind="flipped[index]"
           v-bind:style="{ height: deviceHeight * 0.15 + 'px' }"
-          color="blue-lighten-5"
-          elevation="2"
           width="50%"
           height="100%"
-          class="pa-4 text-center mx-auto d-flex flex-column align-center justify-center flip"
-          @click="flip(index)"
+          class="pa-4 text-center mx-auto d-flex flex-column align-center justify-center"
+          elevation="2"
+          @click="flip(card)"
+          :class="getItemClass(index)"
+          v-if="!card.matched"
         >
-          <v-icon v-if="flipped[index]"> {{ icon }} </v-icon>
+          <v-icon v-if="card.active"> {{ card.icon }} </v-icon>
           <v-icon v-else> fas fa-question </v-icon>
+        </v-sheet>
+        <v-sheet
+          v-bind:style="{ height: deviceHeight * 0.15 + 'px' }"
+          width="50%"
+          height="100%"
+          color="grey lighten-2"
+          class="pa-4 text-center mx-auto d-flex flex-column align-center justify-center"
+          v-else
+        >
         </v-sheet>
       </v-col>
     </v-row>
@@ -22,25 +30,6 @@
 </template>
 
 <script setup lang="ts">
-const flipped = ref<boolean[]>([
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-]);
-
 enum IconMap {
   cloudy = "fas fa-cloud",
   lightningStorm = "fas fa-cloud-bolt",
@@ -52,47 +41,93 @@ enum IconMap {
   foggy = "fas fa-smog",
 }
 
-const list = ref<string[]>([
-  IconMap.cloudy,
-  IconMap.cloudy,
-  IconMap.lightningStorm,
-  IconMap.lightningStorm,
-  IconMap.sunny,
-  IconMap.sunny,
-  IconMap.raining,
-  IconMap.raining,
-  IconMap.partlySunny,
-  IconMap.partlySunny,
-  IconMap.snowing,
-  IconMap.snowing,
-  IconMap.windy,
-  IconMap.windy,
-  IconMap.foggy,
-  IconMap.foggy,
+interface Card {
+  icon: string;
+  active: boolean;
+  matched: boolean;
+}
+
+const cards = ref<Card[]>([
+  { icon: IconMap.cloudy, active: false, matched: false },
+  { icon: IconMap.cloudy, active: false, matched: false },
+  { icon: IconMap.lightningStorm, active: false, matched: false },
+  { icon: IconMap.lightningStorm, active: false, matched: false },
+  { icon: IconMap.sunny, active: false, matched: false },
+  { icon: IconMap.sunny, active: false, matched: false },
+  { icon: IconMap.raining, active: false, matched: false },
+  { icon: IconMap.raining, active: false, matched: false },
+  { icon: IconMap.partlySunny, active: false, matched: false },
+  { icon: IconMap.partlySunny, active: false, matched: false },
+  { icon: IconMap.snowing, active: false, matched: false },
+  { icon: IconMap.snowing, active: false, matched: false },
+  { icon: IconMap.windy, active: false, matched: false },
+  { icon: IconMap.windy, active: false, matched: false },
+  { icon: IconMap.foggy, active: false, matched: false },
+  { icon: IconMap.foggy, active: false, matched: false },
 ]);
 
 const shuffle = () => {
-  list.value = list.value.sort(() => Math.random() - 0.5);
+  cards.value.sort(() => Math.random() - 0.5);
 };
 
-shuffle();
+// shuffle();
 
 const deviceHeight = ref<number>(window.innerHeight);
 window.addEventListener("resize", () => {
   deviceHeight.value = window.innerHeight;
 });
 
-const flip = (index: number) => {
-  flipped.value[index] = !flipped.value[index];
-  // if the array contains 2 flipped cards then flip all cards back over
-  // there needs to be a delay here so that the user can see the second card
-  // before they are flipped back over
+const flip = (card: Card) => {
+  // if the card is already flipped then return
+  if (card.active) return;
 
-  if (flipped.value.filter((x) => x).length === 2) {
-    setTimeout(() => {
-      flipped.value = flipped.value.map(() => false);
-    }, 1000);
+  const activeCards = cards.value.filter((x) => x.active);
+  if (activeCards.length === 2) return;
+  if (activeCards.length === 1) {
+    const prev = cards.value.find((x) => x.active);
+    card.active = !card.active;
+    if (prev != undefined && card.icon === prev.icon) flipCardsBack(true);
+    flipCardsBack();
+    return;
   }
-  console.log(flipped.value[index]);
+  card.active = !card.active;
 };
+
+function checkGameState() {
+  if (cards.value.filter((x) => x.matched === false).length === 0) {
+    console.log("You win!");
+  }
+}
+
+function flipCardsBack(matched: boolean = false) {
+  setTimeout(() => {
+    if (matched) {
+      cards.value
+        .filter((x) => x.active)
+        .forEach((x) => {
+          x.matched = true;
+          x.active = false;
+        });
+      checkGameState();
+    } else {
+      cards.value.forEach((x) => (x.active = false));
+    }
+  }, 500);
+}
+
+function getItemClass(index: number) {
+  return cards.value[index].active ? "front" : "back";
+}
 </script>
+<!-- // Maybe there should a be a gen function that generates a list of cards that //
+have the icon and active state -->
+
+<style lang="scss">
+.front {
+  background-color: #4caf50;
+}
+
+.back {
+  background-color: #f44336;
+}
+</style>
