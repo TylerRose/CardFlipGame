@@ -9,6 +9,7 @@ export interface Card {
 export class FlipGame {
   cards: Card[] = [];
   iconMachine: IconMachine = new IconMachine();
+  isGameOver: boolean = false;
 
   constructor(size: number = 8) {
     this.generateCards(size);
@@ -37,9 +38,23 @@ export class FlipGame {
 
   checkGameState() {
     if (this.cards.filter((x) => x.matched === false).length === 0) {
-      console.log("You win!");
-      this.resetCards();
+      this.isGameOver = true;
+      setTimeout(() => {
+        this.revealAllCards();
+      }, 600);
     }
+  }
+
+  revealAllCards() {
+    this.cards.forEach((x) => {
+      x.matched = false;
+      x.active = true;
+    });
+  }
+
+  restartGame() {
+    this.isGameOver = false;
+    this.resetCards();
   }
 
   flip(card: Card) {

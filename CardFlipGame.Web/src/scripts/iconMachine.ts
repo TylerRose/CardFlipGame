@@ -12,6 +12,16 @@ export class IconMachine {
       "fas fa-wind",
       "fas fa-smog",
       "fas fa-tornado",
+      "fas fa-umbrella",
+      "fas fa-squirrel",
+      "fas fa-acorn",
+      "fas fa-tree",
+      "fas fa-trees",
+      "fas fa-bench-tree",
+      "fas fa-leaf",
+      "fas fa-seedling",
+      "fas fa-carrot",
+      "fas fa-lemon",
     ];
     this.icons = this.icons.sort(() => Math.random() - 0.5);
   }

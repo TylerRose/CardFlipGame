@@ -9,7 +9,7 @@
     >
       <v-sheet
         class="text-center d-flex align-center justify-center rounded-lg w-100 h-100"
-        @click="game.flip(card)"
+        @click="!card.matched ? game.flip(card) : null"
         :class="getItemClass(index)"
       >
         <div v-if="!card.matched">
@@ -18,13 +18,21 @@
       </v-sheet>
     </v-sheet>
   </div>
+  <!-- <v-dialog persistent v-model="game.isGameOver" width="auto">
+    <v-card>
+      <v-card-text> You won! Great job! </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" @click="game.restartGame()"> Play Again </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog> -->
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { FlipGame } from "@/scripts/flipGame";
 
-const game = reactive(new FlipGame(8));
+const game = reactive(new FlipGame(2));
 
 const deviceHeight = ref<number>(window.innerHeight);
 window.addEventListener("resize", () => {
