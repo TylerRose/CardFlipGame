@@ -1,28 +1,23 @@
 <template>
-  <v-container>
-    <v-row class="flex-child text-subtitle-2">
-      <v-col
-        class="v-col-3"
-        v-for="(card, index) in game.cards"
-        v-bind:key="index"
+  <div class="d-flex flex-wrap w-100 h-100 pa-1">
+    <v-sheet
+      v-for="(card, index) in game.cards"
+      v-bind:key="index"
+      class="d-flex align-center justify-center pa-2"
+      :width="100 / Math.sqrt(game.cards.length) + '%'"
+      :height="100 / Math.sqrt(game.cards.length) + '%'"
+    >
+      <v-sheet
+        class="text-center d-flex align-center justify-center rounded-lg w-100 h-100"
+        @click="game.flip(card)"
+        :class="getItemClass(index)"
       >
-        <v-sheet
-          v-bind:style="{ height: deviceHeight * 0.15 + 'px' }"
-          width="50%"
-          height="100%"
-          class="pa-4 text-center mx-auto d-flex flex-column align-center justify-center"
-          elevation="2"
-          @click="game.flip(card)"
-          :class="getItemClass(index)"
-        >
-          <div v-if="!card.matched">
-            <v-icon v-if="card.active"> {{ card.icon }} </v-icon>
-            <v-icon v-else> fas fa-question </v-icon>
-          </div>
-        </v-sheet>
-      </v-col>
-    </v-row>
-  </v-container>
+        <div v-if="!card.matched">
+          <v-icon v-show="card.active" size="x-large"> {{ card.icon }} </v-icon>
+        </div>
+      </v-sheet>
+    </v-sheet>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -42,16 +37,16 @@ function getItemClass(index: number) {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .front {
-  background-color: #4caf50;
+  background-color: #cf3d3b;
 }
 
 .back {
-  background-color: #f44336;
+  background-color: #0aa795;
 }
 
 .matched {
-  background-color: #b7b7b7;
+  background-color: #d2d2d2;
 }
 </style>
