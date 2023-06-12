@@ -18,14 +18,15 @@
       </v-sheet>
     </v-sheet>
   </div>
-  <!-- <v-dialog persistent v-model="game.isGameOver" width="auto">
+  <v-dialog persistent v-model="game.isGameOver" width="auto">
     <v-card>
       <v-card-text> You won! Great job! </v-card-text>
       <v-card-actions>
         <v-btn color="primary" @click="game.restartGame()"> Play Again </v-btn>
       </v-card-actions>
     </v-card>
-  </v-dialog> -->
+  </v-dialog>
+  <!-- <v-btn @click="game.generateCards()">Start new game!</v-btn> -->
 </template>
 
 <script setup lang="ts">
