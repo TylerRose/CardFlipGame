@@ -29,15 +29,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { reactive } from "vue";
 import { FlipGame } from "@/scripts/flipGame";
 
 const game = reactive(new FlipGame(2));
-
-const deviceHeight = ref<number>(window.innerHeight);
-window.addEventListener("resize", () => {
-  deviceHeight.value = window.innerHeight;
-});
 
 function getItemClass(index: number) {
   if (game.cards[index].matched) return "matched";
