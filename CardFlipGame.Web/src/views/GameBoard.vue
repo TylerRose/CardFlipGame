@@ -3,7 +3,7 @@
     <v-sheet
       v-for="(card, index) in game.cards"
       v-bind:key="index"
-      class="d-flex align-center justify-center pa-2"
+      class="d-flex align-center justify-center pa-1"
       :width="100 / Math.sqrt(game.cards.length) + '%'"
       :height="100 / Math.sqrt(game.cards.length) + '%'"
     >
@@ -12,9 +12,9 @@
         @click="!card.matched ? game.flip(card) : null"
         :class="getItemClass(index)"
       >
-        <div v-if="!card.matched">
-          <v-icon v-show="card.active" size="x-large"> {{ card.icon }} </v-icon>
-        </div>
+        <v-icon v-show="!card.matched && card.active" size="x-large">
+          {{ card.icon }}
+        </v-icon>
       </v-sheet>
     </v-sheet>
   </div>
