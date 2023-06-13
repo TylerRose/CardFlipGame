@@ -38,7 +38,7 @@
           <v-list-item-title>Instructions</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link to="/game">
+        <v-list-item link to="/play">
           <template #prepend>
             <v-icon>fas fa-chess-rook</v-icon>
           </template>
