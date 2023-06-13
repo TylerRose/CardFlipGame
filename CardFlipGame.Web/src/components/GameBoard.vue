@@ -1,13 +1,12 @@
 <template>
-  <div class="d-flex flex-wrap w-100 h-100 pa-1">
+  <div class="d-flex flex-wrap w-100 h-100 pa-1 no-select">
     <v-sheet
       v-for="(card, index) in game.cards"
       v-bind:key="index"
       class="d-flex align-center justify-center pa-1"
-      :width="100 / Math.sqrt(game.cards.length) + '%'"
-      :height="100 / Math.sqrt(game.cards.length) + '%'"
+      :width="cardSize"
+      :height="cardSize"
     >
-      <!-- TODO: hard difficulty does not display correctly. -->
       <v-sheet
         class="text-center d-flex align-center justify-center rounded-lg w-100 h-100"
         @click="!card.matched ? game.flip(card) : null"
@@ -23,7 +22,9 @@
     <v-card>
       <v-card-text> You won! Great job! </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" @click="game.restartGame()"> Play Again </v-btn>
+        <v-btn class="mx-auto" color="primary" @click="game.restartGame()">
+          Play Again
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -39,6 +40,8 @@ const props = defineProps({
     default: Difficulty.Noob,
   },
 });
+
+const cardSize = 100 / Math.sqrt(props.difficulty * 2) + "%";
 
 const game = reactive(new FlipGame(props.difficulty));
 
@@ -60,5 +63,12 @@ function getCardColorClass(index: number): string {
 
 .matched {
   background-color: #d2d2d2;
+}
+
+// Prevents text selection on cards.
+.no-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

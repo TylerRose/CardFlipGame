@@ -49,8 +49,9 @@ export class FlipGame {
     if (this.cards.filter((x) => x.matched === false).length === 0) {
       this.isGameOver = true;
       setTimeout(() => {
-        this.revealAllCards();
-        // TODO: bug - the game can be restarted before the cards are revealed
+        if (this.isGameOver) {
+          this.revealAllCards();
+        }
       }, 600);
     }
   }

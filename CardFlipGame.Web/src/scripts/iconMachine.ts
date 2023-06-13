@@ -23,7 +23,23 @@ export class IconMachine {
       "fas fa-droplet",
       "fas fa-fire",
       "fas fa-key",
+      "fas fa-bolt",
+      "fas fa-bug",
+      "fas fa-robot",
+      "fas fa-rocket",
+      "fas fa-crown",
+      "fas fa-gift",
+      "fas fa-dove",
+      "fas fa-fish-fins",
+      "fas fa-eye",
+      "fas fa-diamond",
+      "fas fa-gem",
+      "fas fa-atom",
+      "fas fa-biohazard",
+      "fas fa-bomb",
+      "fas fa-bone",
     ];
+    // TODO: Create topic-=
     this.icons = this.icons.sort(() => Math.random() - 0.5);
   }
 
