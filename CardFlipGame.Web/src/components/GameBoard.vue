@@ -25,7 +25,6 @@
         <v-card-text> You won! Great job! </v-card-text>
         <v-card-actions>
           <v-btn color="primary" @click="game.restartGame()"> New Game </v-btn>
-          <v-btn color="primary" @click="game.resetCards()"> Try Again </v-btn>
           <v-btn color="primary" @click="emit('stopPlaying')">
             Change Difficulty
           </v-btn>
@@ -60,7 +59,7 @@ function getCardColorClass(index: number): string {
 
 // Show the difficulty selection menu when the user navigates back.
 onMounted(() => {
-  window.history.pushState(null, document.title, window.location.href);
+  window.history.pushState("playing", document.title, window.location.href);
   window.addEventListener("popstate", () => {
     emit("stopPlaying");
   });

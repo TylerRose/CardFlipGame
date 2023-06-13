@@ -43,15 +43,6 @@ export class FlipGame {
     this.cards = this.cards.sort(() => Math.random() - 0.5);
   }
 
-  resetCards() {
-    this.isGameOver = false;
-    this.cards.forEach((card) => {
-      card.active = false;
-      card.matched = false;
-    });
-    this.shuffleCards();
-  }
-
   checkGameState() {
     if (this.cards.filter((x) => x.matched === false).length === 0) {
       this.isGameOver = true;
