@@ -39,12 +39,12 @@ export class IconMachine {
       "fas fa-bomb",
       "fas fa-bone",
     ];
-    // TODO: Create topic-=
-    this.icons = this.icons.sort(() => Math.random() - 0.5);
+    // TODO: Create topic-specific icon sets.
   }
 
   //pick a number of icons from the list
   getIcons(size: number): string[] {
+    this.icons = this.icons.sort(() => Math.random() - 0.5);
     if (size > this.icons.length) {
       return this.icons;
     }

@@ -21,10 +21,16 @@ export class FlipGame {
 
   constructor(difficulty: Difficulty = Difficulty.Easy) {
     this.difficulty = difficulty;
+    this.restartGame();
+  }
+
+  restartGame() {
+    this.isGameOver = false;
     this.generateCards();
   }
 
   generateCards(): void {
+    this.cards.splice(0);
     const icons = this.iconMachine.getIcons(this.difficulty.valueOf());
     icons.forEach((icon) => {
       this.cards.push({ icon, active: false, matched: false });
@@ -38,6 +44,7 @@ export class FlipGame {
   }
 
   resetCards() {
+    this.isGameOver = false;
     this.cards.forEach((card) => {
       card.active = false;
       card.matched = false;
@@ -61,12 +68,6 @@ export class FlipGame {
       x.matched = false;
       x.active = true;
     });
-  }
-
-  restartGame() {
-    this.isGameOver = false;
-    this.cards.splice(0);
-    this.generateCards();
   }
 
   flip(card: Card) {

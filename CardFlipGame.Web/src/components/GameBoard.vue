@@ -10,6 +10,7 @@
       >
         <v-sheet
           class="text-center d-flex align-center justify-center rounded-lg w-100 h-100"
+          :key="game.cards[index].icon"
           @click="!card.matched ? game.flip(card) : null"
           :class="getCardColorClass(index)"
         >
@@ -23,9 +24,8 @@
       <v-card>
         <v-card-text> You won! Great job! </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" @click="game.restartGame()">
-            Play Again
-          </v-btn>
+          <v-btn color="primary" @click="game.restartGame()"> New Game </v-btn>
+          <v-btn color="primary" @click="game.resetCards()"> Try Again </v-btn>
           <v-btn color="primary" @click="emit('stopPlaying')">
             Change Difficulty
           </v-btn>
@@ -59,8 +59,6 @@ function getCardColorClass(index: number): string {
 }
 
 // Show the difficulty selection menu when the user navigates back.
-// TODO: Find a better way to do this - or not at all?
-// Probably should have just used a different page for the difficulty selection menu.
 onMounted(() => {
   window.history.pushState(null, document.title, window.location.href);
   window.addEventListener("popstate", () => {
@@ -83,7 +81,7 @@ onMounted(() => {
 }
 
 /* Prevents text selection on cards, which prevents chrome (specifically?) from 
-rendering a disabled cursor when the user attempts to drag a card. */
+rendering a disabled cursor when the user attempts to drag a selected card. */
 .no-select {
   -webkit-user-select: none;
   -ms-user-select: none;
