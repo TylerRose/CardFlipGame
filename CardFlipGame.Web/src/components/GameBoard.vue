@@ -7,10 +7,11 @@
       :width="100 / Math.sqrt(game.cards.length) + '%'"
       :height="100 / Math.sqrt(game.cards.length) + '%'"
     >
+      <!-- TODO: hard difficulty does not display correctly. -->
       <v-sheet
         class="text-center d-flex align-center justify-center rounded-lg w-100 h-100"
         @click="!card.matched ? game.flip(card) : null"
-        :class="getItemClass(index)"
+        :class="getCardColorClass(index)"
       >
         <v-icon v-show="!card.matched && card.active" size="x-large">
           {{ card.icon }}
@@ -30,13 +31,21 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
-import { FlipGame, Difficulty } from "@/scripts/flipGame";
+import { FlipGame, Difficulty } from "@/scripts/gameService";
 
-const game = reactive(new FlipGame(Difficulty.Noob));
+const props = defineProps({
+  difficulty: {
+    type: Number as () => Difficulty,
+    default: Difficulty.Noob,
+  },
+});
 
-function getItemClass(index: number) {
-  if (game.cards[index].matched) return "matched";
-  return game.cards[index].active ? "front" : "back";
+const game = reactive(new FlipGame(props.difficulty));
+
+function getCardColorClass(index: number): string {
+  const card = game.cards[index];
+  if (card.matched) return "matched";
+  return card.active ? "front" : "back";
 }
 </script>
 
