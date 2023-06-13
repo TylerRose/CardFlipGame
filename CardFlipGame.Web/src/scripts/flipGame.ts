@@ -64,7 +64,8 @@ export class FlipGame {
 
   restartGame() {
     this.isGameOver = false;
-    this.resetCards();
+    this.cards.splice(0);
+    this.generateCards();
   }
 
   flip(card: Card) {

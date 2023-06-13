@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { CAdminEditorPage, CAdminTablePage } from "coalesce-vue-vuetify3";
-import Instructions from "./views/Instructions.vue";
 
 export default createRouter({
   history: createWebHistory(),
