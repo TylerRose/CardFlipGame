@@ -1,5 +1,5 @@
 <template>
-  <v-container class="h-100 pa-0">
+  <v-container class="fill-height pa-0" fluid>
     <!-- <GameMenu />-->
     <GameBoard />
   </v-container>
