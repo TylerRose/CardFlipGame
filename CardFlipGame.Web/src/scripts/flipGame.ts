@@ -1,5 +1,12 @@
 import { IconMachine } from "./iconMachine";
 
+export enum Difficulty {
+  Noob = 2,
+  Easy = 8,
+  Medium = 18,
+  Hard = 32,
+}
+
 export interface Card {
   icon: string;
   active: boolean;
@@ -10,13 +17,15 @@ export class FlipGame {
   cards: Card[] = [];
   iconMachine: IconMachine = new IconMachine();
   isGameOver: boolean = false;
+  difficulty: Difficulty = Difficulty.Easy;
 
-  constructor(size: number = 8) {
-    this.generateCards(size);
+  constructor(difficulty: Difficulty = Difficulty.Easy) {
+    this.difficulty = difficulty;
+    this.generateCards();
   }
 
-  generateCards(size: number = 8): void {
-    const icons = this.iconMachine.getIcons(size);
+  generateCards(): void {
+    const icons = this.iconMachine.getIcons(this.difficulty.valueOf());
     icons.forEach((icon) => {
       this.cards.push({ icon, active: false, matched: false });
       this.cards.push({ icon, active: false, matched: false });
@@ -41,6 +50,7 @@ export class FlipGame {
       this.isGameOver = true;
       setTimeout(() => {
         this.revealAllCards();
+        // TODO: bug - the game can be restarted before the cards are revealed
       }, 600);
     }
   }

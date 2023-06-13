@@ -18,21 +18,21 @@
       </v-sheet>
     </v-sheet>
   </div>
-  <!-- <v-dialog persistent v-model="game.isGameOver" width="auto">
+  <v-dialog persistent v-model="game.isGameOver" width="auto">
     <v-card>
       <v-card-text> You won! Great job! </v-card-text>
       <v-card-actions>
         <v-btn color="primary" @click="game.restartGame()"> Play Again </v-btn>
       </v-card-actions>
     </v-card>
-  </v-dialog> -->
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
 import { reactive } from "vue";
-import { FlipGame } from "@/scripts/flipGame";
+import { FlipGame, Difficulty } from "@/scripts/flipGame";
 
-const game = reactive(new FlipGame(2));
+const game = reactive(new FlipGame(Difficulty.Noob));
 
 function getItemClass(index: number) {
   if (game.cards[index].matched) return "matched";
