@@ -9,9 +9,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    CDisplay: typeof import('coalesce-vue-vuetify3')['CDisplay']
-    CInput: typeof import('coalesce-vue-vuetify3')['CInput']
-    CLoaderStatus: typeof import('coalesce-vue-vuetify3')['CLoaderStatus']
     GameBoard: typeof import('./../components/GameBoard.vue')['default']
     GameMenu: typeof import('./../components/GameMenu.vue')['default']
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
@@ -29,7 +26,6 @@ declare module '@vue/runtime-core' {
     VContainer: typeof import('vuetify/components')['VContainer']
     VDialog: typeof import('vuetify/components')['VDialog']
     VDivider: typeof import('vuetify/components')['VDivider']
-    VExpandTransition: typeof import('vuetify/components')['VExpandTransition']
     VIcon: typeof import('vuetify/components')['VIcon']
     VList: typeof import('vuetify/components')['VList']
     VListItem: typeof import('vuetify/components')['VListItem']

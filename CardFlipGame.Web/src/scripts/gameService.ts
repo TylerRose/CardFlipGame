@@ -11,7 +11,6 @@ export interface Card {
   icon: string;
   active: boolean;
   matched: boolean;
-  flipped: boolean;
 }
 
 export class FlipGame {
@@ -34,8 +33,8 @@ export class FlipGame {
     this.cards.splice(0);
     const icons = this.iconMachine.getIcons(this.difficulty.valueOf());
     icons.forEach((icon) => {
-      this.cards.push({ icon, active: false, matched: false, flipped: false });
-      this.cards.push({ icon, active: false, matched: false, flipped: false });
+      this.cards.push({ icon, active: false, matched: false });
+      this.cards.push({ icon, active: false, matched: false });
     });
     this.shuffleCards();
   }
@@ -65,14 +64,22 @@ export class FlipGame {
   flip(card: Card) {
     if (card.active) return;
 
-    card.flipped = true;
-
     const activeCards = this.cards.filter((x) => x.active);
     if (activeCards.length === 2) return;
     if (activeCards.length === 1) {
       const prev = this.cards.find((x) => x.active);
       card.active = !card.active;
-      if (prev != undefined && card.icon === prev.icon) {
+      if (prev != undefined && card.icon === prev.icon)
+        this.flipCardsBack(true);
+      this.flipCardsBack();
+      return;
+    }
+    card.active = !card.active;
+  }
+
+  flipCardsBack(matched: boolean = false) {
+    setTimeout(() => {
+      if (matched) {
         this.cards
           .filter((x) => x.active)
           .forEach((x) => {
@@ -80,19 +87,9 @@ export class FlipGame {
             x.active = false;
           });
         this.checkGameState();
+      } else {
+        this.cards.forEach((x) => (x.active = false));
       }
-      this.flipCardsBack();
-      return;
-    }
-    card.active = !card.active;
-  }
-
-  flipCardsBack() {
-    setTimeout(() => {
-      this.cards.forEach((x) => {
-        x.active = false;
-        if (!x.matched) x.flipped = false;
-      });
     }, 500);
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height pa-0" fluid>
     <vue-flip
-      v-model="card.flipped"
+      v-model="card.active"
       :width="cardSize"
       :height="cardSize"
       v-for="(card, index) in game.cards"
@@ -11,16 +11,21 @@
       <template v-slot:front>
         <v-sheet
           @click="!card.matched ? game.flip(card) : null"
-          class="front rounded-lg w-100 h-100"
-        />
+          :color="card.matched ? 'green' : 'teal'"
+          class="align-center justify-center rounded-lg w-100 h-100 d-flex"
+        >
+          <v-icon
+            v-if="card.matched"
+            style="font-size: 50px"
+            icon="fas fa-circle-check"
+          />
+        </v-sheet>
       </template>
       <template v-slot:back>
         <v-sheet
           @click="!card.matched ? game.flip(card) : null"
-          :class="[
-            card.matched ? 'matched' : 'back',
-            'align-center justify-center rounded-lg w-100 h-100 d-flex',
-          ]"
+          color="red"
+          class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
           <v-icon style="font-size: 50px">
             {{ card.icon }}
