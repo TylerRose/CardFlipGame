@@ -23,15 +23,15 @@ user2.durationInSeconds = 23;
 user2.numberOfMoves = 14;
 user2.$save();
 
-GameService.getGameStats("Vera", 1).then((result) => {
-  console.log(result.data);
-});
+// GameService.getGameStats("Vera", 1).then((result) => {
+//   console.log(result.data);
+// });
 
 userGame.$load(1).then(() => {
   console.log("UserGameViewModel loaded");
-  userGame.playerStats("Vera", 1).then((result) => {
-    console.log(result.data);
-  });
+  // userGame.playerStats("Vera", 1).then((result) => {
+  //   console.log(result.data);
+  // });
 });
 // console.log(Vera.request.playerStats("Vera", 1));
 
