@@ -11,7 +11,6 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     GameBoard: typeof import('./../components/GameBoard.vue')['default']
     GameMenu: typeof import('./../components/GameMenu.vue')['default']
-    HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TimerDisplay: typeof import('./../components/TimerDisplay.vue')['default']
@@ -24,7 +23,6 @@ declare module '@vue/runtime-core' {
     VCardItem: typeof import('vuetify/components')['VCardItem']
     VCardText: typeof import('vuetify/components')['VCardText']
     VCardTitle: typeof import('vuetify/components')['VCardTitle']
-    VCarItem: typeof import('vuetify/components')['VCarItem']
     VCol: typeof import('vuetify/components')['VCol']
     VContainer: typeof import('vuetify/components')['VContainer']
     VDialog: typeof import('vuetify/components')['VDialog']

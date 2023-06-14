@@ -6,8 +6,8 @@ export default createRouter({
   routes: [
     {
       path: "/",
-      name: "play",
-      component: () => import("./views/play.vue"),
+      name: "home",
+      component: () => import("./views/Home.vue"),
     },
     {
       path: "/instructions",
@@ -15,9 +15,9 @@ export default createRouter({
       component: () => import("./views/Instructions.vue"),
     },
     {
-      path: "/home",
-      name: "home",
-      component: () => import("./views/home.vue"),
+      path: "/play",
+      name: "play",
+      component: () => import("./views/Play.vue"),
     },
     {
       path: "/coalesce-example",
