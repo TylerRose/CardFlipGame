@@ -11,7 +11,7 @@
       <template v-slot:front>
         <v-sheet
           @click="!card.matched ? game.flip(card) : null"
-          :color="card.matched ? 'green' : 'teal'"
+          :color="card.matched ? 'green' : 'red'"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
           <v-icon
@@ -24,7 +24,7 @@
       <template v-slot:back>
         <v-sheet
           @click="!card.matched ? game.flip(card) : null"
-          color="red"
+          color="teal"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
           <v-icon style="font-size: 50px">
