@@ -8,3 +8,21 @@ export class ApplicationUserApiClient extends ModelApiClient<$models.Application
 }
 
 
+export class UserGameApiClient extends ModelApiClient<$models.UserGame> {
+  constructor() { super($metadata.UserGame) }
+}
+
+
+export class GameServiceApiClient extends ServiceApiClient<typeof $metadata.GameService> {
+  constructor() { super($metadata.GameService) }
+  public getUserStats(userName: string | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<$models.UserStats[]>> {
+    const $method = this.$metadata.methods.getUserStats
+    const $params =  {
+      userName,
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
+}
+
+

@@ -10,6 +10,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using CardFlipGame.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using CardFlipGame.Data.Models;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -41,6 +42,7 @@ services.AddDbContext<AppDbContext>(options => options
 );
 
 services.AddCoalesce<AppDbContext>();
+services.AddScoped<IGameService, GameService>();
 
 services
     .AddMvc()

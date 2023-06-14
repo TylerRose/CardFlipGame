@@ -24,3 +24,57 @@ export class ApplicationUser {
 }
 
 
+export interface UserGame extends Model<typeof metadata.UserGame> {
+  userGameId: number | null
+  userName: string | null
+  difficulty: number | null
+  durationInSeconds: number | null
+  numberOfMoves: number | null
+}
+export class UserGame {
+  
+  /** Mutates the input object and its descendents into a valid UserGame implementation. */
+  static convert(data?: Partial<UserGame>): UserGame {
+    return convertToModel(data || {}, metadata.UserGame) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid UserGame implementation. */
+  static map(data?: Partial<UserGame>): UserGame {
+    return mapToModel(data || {}, metadata.UserGame) 
+  }
+  
+  /** Instantiate a new UserGame, optionally basing it on the given data. */
+  constructor(data?: Partial<UserGame> | {[k: string]: any}) {
+    Object.assign(this, UserGame.map(data || {}));
+  }
+}
+
+
+export interface UserStats extends Model<typeof metadata.UserStats> {
+  name: string | null
+  averageDurationEasy: number | null
+  averageMovesEasy: number | null
+  averageDurationMedium: number | null
+  averageMovesMedium: number | null
+  averageDurationHard: number | null
+  averageMovesHard: number | null
+}
+export class UserStats {
+  
+  /** Mutates the input object and its descendents into a valid UserStats implementation. */
+  static convert(data?: Partial<UserStats>): UserStats {
+    return convertToModel(data || {}, metadata.UserStats) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid UserStats implementation. */
+  static map(data?: Partial<UserStats>): UserStats {
+    return mapToModel(data || {}, metadata.UserStats) 
+  }
+  
+  /** Instantiate a new UserStats, optionally basing it on the given data. */
+  constructor(data?: Partial<UserStats> | {[k: string]: any}) {
+    Object.assign(this, UserStats.map(data || {}));
+  }
+}
+
+
