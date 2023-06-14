@@ -1,5 +1,6 @@
 <template>
   <v-container class="fill-height pa-0" fluid>
+    <TimerDisplay :milliseconds="game.timer * 1000" class="timer"/>
     <div class="d-flex flex-wrap w-100 h-100 pa-1 no-select">
       <v-sheet
         v-for="(card, index) in game.cards"
@@ -36,7 +37,8 @@
 
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
-import { FlipGame, Difficulty } from "@/scripts/gameService";
+import {FlipGame, Difficulty} from "@/scripts/gameService";
+import TimerDisplay from "@/components/TimerDisplay.vue";
 
 const emit = defineEmits(["stopPlaying"]);
 
@@ -85,5 +87,15 @@ rendering a disabled cursor when the user attempts to drag a selected card. */
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.timer {
+  position: absolute;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 </style>

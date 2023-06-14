@@ -2,8 +2,8 @@
   <v-container class="fill-height pa-0" fluid>
     <transition name="router-transition" mode="out-in" appear>
       <GameBoard
-        v-if="isPlaying.valueOf()"
-        :difficulty="difficulty.valueOf()"
+        v-if="isPlaying"
+        :difficulty="difficulty"
         @stopPlaying="stopPlaying"
       />
       <GameMenu

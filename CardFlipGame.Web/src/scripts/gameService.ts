@@ -1,4 +1,4 @@
-import { IconMachine } from "./iconMachine";
+import {IconMachine} from "./iconMachine";
 
 export enum Difficulty {
   Noob = 2,
@@ -18,6 +18,8 @@ export class FlipGame {
   iconMachine: IconMachine = new IconMachine();
   isGameOver: boolean = false;
   difficulty: Difficulty = Difficulty.Easy;
+  timer: number = 0;
+  timerId: any;
 
   constructor(difficulty: Difficulty = Difficulty.Easy) {
     this.difficulty = difficulty;
@@ -44,24 +46,26 @@ export class FlipGame {
   }
 
   checkGameState() {
-    if (this.cards.filter((x) => x.matched === false).length === 0) {
-      this.isGameOver = true;
-      setTimeout(() => {
-        if (this.isGameOver) {
-          this.revealAllCards();
-        }
-      }, 600);
+    this.isGameOver = this.cards.filter((x) => !x.matched).length === 0;
+    if (this.isGameOver) {
+      clearInterval(this.timerId);
+      this.revealAllCards();
     }
   }
 
   revealAllCards() {
     this.cards.forEach((x) => {
-      x.matched = false;
       x.active = true;
     });
   }
 
   flip(card: Card) {
+    if (this.timer == 0) {
+      this.timer = 1;
+      this.timerId = setInterval(() => {
+        this.timer++;
+      }, 1000);
+    }
     if (card.active) return;
 
     const activeCards = this.cards.filter((x) => x.active);

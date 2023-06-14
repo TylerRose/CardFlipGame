@@ -9,14 +9,12 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    CDisplay: typeof import('coalesce-vue-vuetify3')['CDisplay']
-    CInput: typeof import('coalesce-vue-vuetify3')['CInput']
-    CLoaderStatus: typeof import('coalesce-vue-vuetify3')['CLoaderStatus']
     GameBoard: typeof import('./../components/GameBoard.vue')['default']
     GameMenu: typeof import('./../components/GameMenu.vue')['default']
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TimerDisplay: typeof import('./../components/TimerDisplay.vue')['default']
     VApp: typeof import('vuetify/components')['VApp']
     VAppBar: typeof import('vuetify/components')['VAppBar']
     VAppBarNavIcon: typeof import('vuetify/components')['VAppBarNavIcon']
