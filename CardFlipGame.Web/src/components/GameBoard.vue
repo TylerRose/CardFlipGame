@@ -1,34 +1,51 @@
 <template>
   <v-container class="fill-height pa-0" fluid>
-    <div class="d-flex flex-wrap w-100 h-100 pa-1 no-select">
-      <v-sheet
-        v-for="(card, index) in game.cards"
-        v-bind:key="index"
-        class="d-flex align-center justify-center pa-1"
-        :width="cardSize"
-        :height="cardSize"
-      >
+    <vue-flip
+      v-model="card.active"
+      :width="cardSize"
+      :height="cardSize"
+      v-for="(card, index) in game.cards"
+      v-bind:key="index"
+      class="pa-1"
+    >
+      <template v-slot:front>
         <v-sheet
-          class="text-center d-flex align-center justify-center rounded-lg w-100 h-100"
-          :key="game.cards[index].icon"
           @click="!card.matched ? game.flip(card) : null"
-          :class="getCardColorClass(index)"
+          :color="card.matched ? 'green' : 'red'"
+          class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
-          <v-icon v-show="!card.matched && card.active" size="x-large">
+          <v-icon
+            v-if="card.matched"
+            class="icon-size"
+            icon="fas fa-circle-check"
+          />
+        </v-sheet>
+      </template>
+      <template v-slot:back>
+        <v-sheet
+          @click="!card.matched ? game.flip(card) : null"
+          color="teal"
+          class="align-center justify-center rounded-lg w-100 h-100 d-flex"
+        >
+          <v-icon class="icon-size">
             {{ card.icon }}
           </v-icon>
         </v-sheet>
-      </v-sheet>
-    </div>
-    <v-dialog persistent v-model="game.isGameOver" width="auto">
-      <v-card>
-        <v-card-text> You won! Great job! </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" @click="game.restartGame()"> New Game </v-btn>
-          <v-btn color="primary" @click="emit('stopPlaying')">
+      </template>
+    </vue-flip>
+    <v-dialog persistent v-model="game.isGameOver" width="400px">
+      <v-card class="text-center">
+        <v-card-item>
+          <v-card-title>You won! Great job!</v-card-title>
+        </v-card-item>
+        <v-card-text>
+          <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
           </v-btn>
-        </v-card-actions>
+          <v-btn color="teal" @click="game.restartGame()" class="ma-2">
+            New Game
+          </v-btn>
+        </v-card-text>
       </v-card>
     </v-dialog>
   </v-container>
@@ -37,6 +54,7 @@
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
 import { FlipGame, Difficulty } from "@/scripts/gameService";
+import { VueFlip } from "vue-flip";
 
 const emit = defineEmits(["stopPlaying"]);
 
@@ -48,14 +66,7 @@ const props = defineProps({
 });
 
 const cardSize = 100 / Math.sqrt(props.difficulty * 2) + "%";
-
 const game = reactive(new FlipGame(props.difficulty));
-
-function getCardColorClass(index: number): string {
-  const card = game.cards[index];
-  if (card.matched) return "matched";
-  return card.active ? "front" : "back";
-}
 
 // Show the difficulty selection menu when the user navigates back.
 onMounted(() => {
@@ -67,23 +78,15 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.front {
-  background-color: #cf3d3b;
-}
-
-.back {
-  background-color: #0aa795;
-}
-
-.matched {
-  background-color: #d2d2d2;
-}
-
 /* Prevents text selection on cards, which prevents chrome (specifically?) from 
 rendering a disabled cursor when the user attempts to drag a selected card. */
 .no-select {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.icon-size {
+  font-size: 45px;
 }
 </style>
