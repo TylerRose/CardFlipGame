@@ -1,12 +1,12 @@
 <template>
-  <v-container class="fill-height pa-0" fluid>
+  <v-container class="fill-height pa-1" fluid>
     <vue-flip
       v-model="card.active"
       :width="cardSize"
       :height="cardSize"
       v-for="(card, index) in game.cards"
       v-bind:key="index"
-      class="pa-1"
+      class="pa-1 no-select"
     >
       <template v-slot:front>
         <v-sheet
@@ -27,18 +27,16 @@
           color="teal"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
-          <v-icon class="icon-size">
-            {{ card.icon }}
-          </v-icon>
+          <v-icon class="icon-size" :icon="game.cards[index].icon" />
         </v-sheet>
       </template>
     </vue-flip>
-    <v-dialog persistent v-model="game.isGameOver" width="400px">
+    <v-dialog persistent v-model="game.isGameOver" width="auto">
       <v-card class="text-center">
         <v-card-item>
           <v-card-title>You won! Great job!</v-card-title>
         </v-card-item>
-        <v-card-text>
+        <v-card-text class="pa-2">
           <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
           </v-btn>
