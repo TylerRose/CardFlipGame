@@ -1,25 +1,33 @@
 <template>
   <v-container class="fill-height pa-0" fluid>
-    <div class="d-flex flex-wrap w-100 h-100 pa-1 no-select">
-      <v-sheet
-        v-for="(card, index) in game.cards"
-        v-bind:key="index"
-        class="d-flex align-center justify-center pa-1"
-        :width="cardSize"
-        :height="cardSize"
-      >
+    <vue-flip
+      v-model="card.flipped"
+      :width="cardSize"
+      :height="cardSize"
+      v-for="(card, index) in game.cards"
+      v-bind:key="index"
+      class="pa-1"
+    >
+      <template v-slot:front>
         <v-sheet
-          class="text-center d-flex align-center justify-center rounded-lg w-100 h-100"
-          :key="game.cards[index].icon"
           @click="!card.matched ? game.flip(card) : null"
-          :class="getCardColorClass(index)"
+          class="front rounded-lg w-100 h-100"
+        />
+      </template>
+      <template v-slot:back>
+        <v-sheet
+          @click="!card.matched ? game.flip(card) : null"
+          :class="[
+            card.matched ? 'matched' : 'back',
+            'align-center justify-center rounded-lg w-100 h-100 d-flex',
+          ]"
         >
-          <v-icon v-show="!card.matched && card.active" size="x-large">
+          <v-icon style="font-size: 50px">
             {{ card.icon }}
           </v-icon>
         </v-sheet>
-      </v-sheet>
-    </div>
+      </template>
+    </vue-flip>
     <v-dialog persistent v-model="game.isGameOver" width="auto">
       <v-card>
         <v-card-text> You won! Great job! </v-card-text>
@@ -37,6 +45,7 @@
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
 import { FlipGame, Difficulty } from "@/scripts/gameService";
+import { VueFlip } from "vue-flip";
 
 const emit = defineEmits(["stopPlaying"]);
 
