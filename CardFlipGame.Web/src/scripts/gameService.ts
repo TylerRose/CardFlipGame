@@ -36,34 +36,17 @@ export class FlipGame {
       this.cards.push({ icon, active: false, matched: false });
       this.cards.push({ icon, active: false, matched: false });
     });
-    this.shuffleCards();
-  }
-
-  shuffleCards() {
     this.cards = this.cards.sort(() => Math.random() - 0.5);
   }
 
   checkGameState() {
     if (this.cards.filter((x) => x.matched === false).length === 0) {
       this.isGameOver = true;
-      setTimeout(() => {
-        if (this.isGameOver) {
-          this.revealAllCards();
-        }
-      }, 600);
     }
-  }
-
-  revealAllCards() {
-    this.cards.forEach((x) => {
-      x.matched = false;
-      x.active = true;
-    });
   }
 
   flip(card: Card) {
     if (card.active) return;
-
     const activeCards = this.cards.filter((x) => x.active);
     if (activeCards.length === 2) return;
     if (activeCards.length === 1) {
