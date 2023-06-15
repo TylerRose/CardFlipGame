@@ -91,7 +91,8 @@ const loginService = new LoginServiceViewModel();
 const userGame = new UserGameViewModel();
 
 async function storeGameResult() {
-  if (await loginService.isLoggedIn()) {
+  try {
+    await loginService.isLoggedIn();
     var user: ApplicationUser = (await loginService.getUserInfo()).data.object!;
     var applicationUser = new ApplicationUserViewModel(user);
     userGame.userId = user.id;
@@ -110,11 +111,12 @@ async function storeGameResult() {
       default:
         userGame.difficulty = 1;
     }
-    userGame.durationInSeconds = game.durationInSeconds;
+    userGame.durationInSeconds = game.timer;
     userGame.numberOfMoves = game.numberOfMoves;
     userGame.$save();
     console.log("Game saved");
-  } else {
+  } catch (e) {
+    console.log(e);
     console.log("User not logged in");
   }
 }

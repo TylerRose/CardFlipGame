@@ -26,17 +26,5 @@ const loginService = new LoginServiceViewModel();
 async function login() {
   await loginService.login(username.value, password.value);
   console.log(await loginService.isLoggedIn());
-
-  // var user: ApplicationUser = (await loginService.getUserInfo()).data.object!;
-  // console.log(user);
-  // var userViewModel = new ApplicationUserViewModel(user)
-
-  //  --- Modify/save user example now that it's a view model---
-
-  // console.log(userViewModel.id);
-  // userViewModel.name = "Test123";
-  // await userViewModel.$save();
-  // user = (await loginService.getUserInfo()).data.object!;
-  // console.log(user.name);
 }
 </script>
