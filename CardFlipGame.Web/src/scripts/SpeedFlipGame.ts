@@ -30,7 +30,6 @@ export class SpeedFlipGame extends FlipGame {
     this.waitFlipBack(this.flipQueue[0], this.flipQueue[1], matched);
     this.flipQueue.splice(0,2);
   }
-
   waitFlipBack(card1:Card, card2:Card, matched:boolean){
     setTimeout(() => {
       this.points++;
