@@ -12,7 +12,7 @@
       />
       <v-card-text v-else>
         <v-table
-          v-if="!stats == undefined"
+          v-if="stats !== undefined"
           hover
           style="background: transparent"
         >
