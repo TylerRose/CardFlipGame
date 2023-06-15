@@ -41,7 +41,7 @@ const vuetify = createVuetify({
       light: {
         colors: {
           teal: '#009090',
-          red: '#FF3333',
+          red: '#F01111',
           green: '#4CAF50',
           blue: '#2196F3',
           orange: '#ff9800'

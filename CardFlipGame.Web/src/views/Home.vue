@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height d-flex align-center justify-center">
-    <v-card width="400" class="text-center pa-2">
+    <v-card width="400" class="text-center pa-2 shadow">
       <v-card-item>
         <v-card-title>Epic Card Flip Game</v-card-title>
       </v-card-item>

@@ -101,4 +101,9 @@ onMounted(() => {
 .router-transition-leave-to {
   opacity: 0;
 }
+
+// The default vuetify elevation shadows are bad. This is better.
+.shadow {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
 </style>
