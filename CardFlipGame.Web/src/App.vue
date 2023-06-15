@@ -1,15 +1,13 @@
 <template>
   <v-app id="vue-app">
-    <v-app-bar color="primary">
+    <v-app-bar color="teal">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
-        <router-link to="/" style="color: inherit">
-          Coalesce Vue Template
-        </router-link>
+        <router-link to="/" style="color: inherit"> Epic Flip </router-link>
       </v-toolbar-title>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
-      <v-list>
+      <v-list color="teal">
         <v-list-item link to="/">
           <template #prepend>
             <v-icon>fas fa-home</v-icon>
@@ -17,18 +15,11 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link to="/coalesce-example">
+        <v-list-item link to="/play">
           <template #prepend>
-            <v-icon>fas fa-palette</v-icon>
+            <v-icon>fas fa-chess-rook</v-icon>
           </template>
-          <v-list-item-title>Custom Page Example</v-list-item-title>
-        </v-list-item>
-
-        <v-list-item link to="/admin">
-          <template #prepend>
-            <v-icon>fas fa-cogs</v-icon>
-          </template>
-          <v-list-item-title>Admin Pages</v-list-item-title>
+          <v-list-item-title> Play Game </v-list-item-title>
         </v-list-item>
 
         <v-list-item link to="/instructions">
@@ -36,13 +27,6 @@
             <v-icon>fas fa-book</v-icon>
           </template>
           <v-list-item-title>Instructions</v-list-item-title>
-        </v-list-item>
-
-        <v-list-item link to="/play">
-          <template #prepend>
-            <v-icon>fas fa-chess-rook</v-icon>
-          </template>
-          <v-list-item-title> Play Game </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

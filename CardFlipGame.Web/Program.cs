@@ -10,7 +10,11 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using CardFlipGame.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.OpenApi.Models;
+using CardFlipGame.Data.Services;
 using CardFlipGame.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -32,6 +36,11 @@ builder.Configuration
 
 var services = builder.Services;
 
+builder.Services.AddSwaggerGen(config =>
+{
+    config.SwaggerDoc("v1", new OpenApiInfo { Title = "Card Flip Game", Version = "v1" });
+});
+
 services.AddDbContext<AppDbContext>(options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), opt => opt
         .EnableRetryOnFailure()
@@ -44,6 +53,20 @@ services.AddDbContext<AppDbContext>(options => options
 services.AddCoalesce<AppDbContext>();
 services.AddScoped<IGameService, GameService>();
 
+services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 4;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+    })
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider)
+    .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>>();
+
+services.AddScoped<ILoginService, LoginService>();
+
 services
     .AddMvc()
     .AddJsonOptions(options =>
@@ -54,7 +77,14 @@ services
     });
 
 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie();
+        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+        {
+            options.Events.OnRedirectToLogin = c =>
+            {
+                c.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.FromResult<object>(null!);
+            };
+        });
 
 #endregion
 
@@ -75,23 +105,17 @@ if (app.Environment.IsDevelopment())
 
     app.MapCoalesceSecurityOverview("coalesce-security");
 
-    // TODO: Dummy authentication for initial development.
-    // Replace this with ASP.NET Core Identity, Windows Authentication, or some other scheme.
-    // This exists only because Coalesce restricts all generated pages and API to only logged in users by default.
     app.Use(async (context, next) =>
     {
-        Claim[] claims = new[] { new Claim(ClaimTypes.Name, "developmentuser") };
-
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        await context.SignInAsync(context.User = new ClaimsPrincipal(identity));
-
         await next.Invoke();
     });
-    // End Dummy Authentication.
 }
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 var containsFileHashRegex = new Regex(@"\.[0-9a-fA-F]{8}\.[^\.]*$", RegexOptions.Compiled);
 app.UseStaticFiles(new StaticFileOptions
@@ -139,6 +163,16 @@ using (var scope = app.Services.CreateScope())
     // Run database migrations.
     using var db = serviceScope.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
+
+    RoleManager<IdentityRole> roleManager = serviceScope.GetRequiredService<RoleManager<IdentityRole>>();
+
+    foreach (string role in Roles.AllRoles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
 }
 
 app.Run();
