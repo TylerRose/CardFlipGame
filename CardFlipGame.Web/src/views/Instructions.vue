@@ -1,6 +1,6 @@
 <template>
-  <v-container class="d-flex align-center flex-column">
-    <v-card width="400" class="text-center pa-2">
+  <v-container class="fill-height d-flex align-center justify-center">
+    <v-card width="400" class="text-center pa-2 shadow">
       <v-card-item>
         <v-card-title>How To Play Epic Flip</v-card-title>
       </v-card-item>
@@ -12,6 +12,7 @@
         <div class="d-flex justify-center mb-4">
           <vue-flip
             v-for="n in 2"
+            :key="n"
             :active-click="true"
             width="150px"
             height="200px"
@@ -19,7 +20,7 @@
           >
             <template v-slot:front>
               <v-sheet
-                color="red"
+                color="grey"
                 class="align-center justify-center rounded-lg w-100 h-100 d-flex"
               />
             </template>

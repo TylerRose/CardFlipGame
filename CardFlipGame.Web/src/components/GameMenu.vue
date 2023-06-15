@@ -1,6 +1,6 @@
 <template>
   <v-container class="d-flex align-center flex-column">
-    <v-card width="400" class="text-center pa-2">
+    <v-card width="400" class="text-center pa-2 shadow">
       <v-card-item>
         <v-card-title>Choose a Difficulty</v-card-title>
       </v-card-item>

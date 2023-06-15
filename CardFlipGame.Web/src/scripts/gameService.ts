@@ -1,4 +1,5 @@
 import { IconMachine } from "./iconMachine";
+import { ColorMachine } from "./colorMachine";
 
 export enum Difficulty {
   Noob = 2,
@@ -10,6 +11,7 @@ export enum Difficulty {
 export interface Card {
   cardId: number;
   icon: string;
+  color: string;
   active: boolean;
   activeBy?: number;
   matched: boolean;
@@ -17,6 +19,7 @@ export interface Card {
 
 export class FlipGame {
   cards: Card[] = [];
+  colorMachine: ColorMachine = new ColorMachine();
   iconMachine: IconMachine = new IconMachine();
   isGameOver: boolean = false;
   difficulty: Difficulty = Difficulty.Easy;
@@ -37,6 +40,14 @@ export class FlipGame {
 
   generateCards(): void {
     this.cards.splice(0);
+    const icons = this.iconMachine.getIcons(this.difficulty.valueOf());
+    const colors = this.colorMachine.getColors(this.difficulty.valueOf());
+    for (let i = 0; i < icons.length; i++) {
+      const icon = icons.at(i)!;
+      const color = colors.at(i)!;
+      this.cards.push({ icon, color, active: false, matched: false });
+      this.cards.push({ icon, color, active: false, matched: false });
+    }
     const icons = this.iconMachine.getIcons(this.difficulty);
     let cardId = 0;
     icons.forEach((icon) => {

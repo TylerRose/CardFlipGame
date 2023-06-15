@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height pa-1" fluid>
-    <TimerDisplay :milliseconds="game.timer * 1000" class="timer"/>
+    <TimerDisplay :milliseconds="game.timer * 1000" class="timer" />
     <vue-flip
       v-model="card.active"
       :width="cardSize"
@@ -12,7 +12,7 @@
       <template v-slot:front>
         <v-sheet
           @click="!card.matched ? game.flip(card) : null"
-          :color="card.matched ? 'green' : 'red'"
+          :color="card.matched ? 'grey-darken-2' : 'grey'"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
           <v-icon
@@ -25,10 +25,14 @@
       <template v-slot:back>
         <v-sheet
           @click="!card.matched ? game.flip(card) : null"
-          color="teal"
+          :color="card.color"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
-          <v-icon class="icon-size" :icon="game.cards[index].icon"/>
+          <v-icon
+            color="white"
+            class="icon-size"
+            :icon="game.cards[index].icon"
+          />
         </v-sheet>
       </template>
     </vue-flip>
@@ -45,10 +49,16 @@
             <v-btn
               v-if="isLoggedIn"
               @click="storeGameResult()"
-              :disabled="userGame.$save.wasSuccessful"
+              :disabled="userGame.$save.wasSuccessful ? true : false"
               :loading="userGame.$save.isLoading"
+              class="mb-1"
+              color="green"
             >
-              <v-icon v-if="userGame.$save.wasSuccessful" class="fas fa-check start" color="green"/>
+              <v-icon
+                v-if="userGame.$save.wasSuccessful"
+                class="fas fa-check"
+                start
+              />
               Save Game
             </v-btn>
             <router-link v-else to="/login">
@@ -69,14 +79,14 @@
 
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
-import {Difficulty, FlipGame} from "@/scripts/gameService";
-import {VueFlip} from "vue-flip";
+import { FlipGame, Difficulty } from "@/scripts/gameService";
+import { VueFlip } from "vue-flip";
 import {
   ApplicationUserViewModel,
   LoginServiceViewModel,
   UserGameViewModel,
 } from "@/viewmodels.g";
-import {ApplicationUser} from "@/models.g";
+import { ApplicationUser } from "@/models.g";
 import TimerDisplay from "@/components/TimerDisplay.vue";
 
 const emit = defineEmits(["stopPlaying"]);
@@ -104,11 +114,14 @@ const loginService = new LoginServiceViewModel();
 const userGame = new UserGameViewModel();
 
 const isLoggedIn = ref(false);
-loginService.isLoggedIn().then(() => {
-  isLoggedIn.value = true;
-}).catch(() => {
-  isLoggedIn.value = false;
-})
+loginService
+  .isLoggedIn()
+  .then(() => {
+    isLoggedIn.value = true;
+  })
+  .catch(() => {
+    isLoggedIn.value = false;
+  });
 
 async function storeGameResult() {
   try {
