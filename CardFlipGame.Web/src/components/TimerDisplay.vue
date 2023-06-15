@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="timer">
     {{ time }}
   </div>
 </template>
@@ -31,3 +31,16 @@ function convertMsToTime(milliseconds: number) {
   )}`;
 }
 </script>
+
+<style lang="scss">
+.timer {
+  position: absolute;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+</style>

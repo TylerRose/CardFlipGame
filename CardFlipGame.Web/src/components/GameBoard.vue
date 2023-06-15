@@ -36,10 +36,10 @@
     </vue-flip>
     <v-dialog persistent v-model="game.isGameOver" width="400px">
       <v-card class="text-center">
-        <v-card-item>
-          <v-card-title>You won! Great job!</v-card-title>
-        </v-card-item>
         <v-card-text>
+          <div class="mb-2">
+            You beat the game in {{ game.timer }} seconds.
+          </div>
           <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
           </v-btn>
@@ -53,9 +53,9 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted } from "vue";
-import { FlipGame, Difficulty } from "@/scripts/gameService";
-import { VueFlip } from "vue-flip";
+import {reactive, onMounted} from "vue";
+import {FlipGame, Difficulty} from "@/scripts/gameService";
+import {VueFlip} from "vue-flip";
 import TimerDisplay from "@/components/TimerDisplay.vue";
 
 const emit = defineEmits(["stopPlaying"]);
@@ -90,15 +90,5 @@ rendering a disabled cursor when the user attempts to drag a selected card. */
 
 .icon-size {
   font-size: 45px;
-}
-.timer {
-  position: absolute;
-  top: 85px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-  background-color: white;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 </style>
