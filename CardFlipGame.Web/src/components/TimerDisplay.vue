@@ -1,15 +1,19 @@
 <template>
-  <div class="timer">
-    {{ time }}
-  </div>
+  <v-card class="pa-0 timer">
+    <v-card-text>
+      {{ time }}
+    </v-card-text>
+  </v-card>
 </template>
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
+const props = withDefaults(
+  defineProps<{
     milliseconds?: number;
   }>(),
   {
     milliseconds: 0,
-  });
+  }
+);
 const time = computed(() => {
   return convertMsToTime(props.milliseconds ?? 0);
 });
@@ -39,7 +43,6 @@ function convertMsToTime(milliseconds: number) {
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
-  background-color: white;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

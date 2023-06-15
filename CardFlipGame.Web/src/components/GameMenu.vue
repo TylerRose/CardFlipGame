@@ -5,7 +5,7 @@
         <v-card-title>Choose a Difficulty</v-card-title>
       </v-card-item>
       <v-divider class="mb-2" />
-      <v-card-text class="my-4">
+      <v-card-text>
         <v-btn color="blue" @click="setDifficulty(Difficulty.Noob)">Noob</v-btn>
         <v-spacer class="my-2" />
         <v-btn color="teal" @click="setDifficulty(Difficulty.Easy)">Easy</v-btn>

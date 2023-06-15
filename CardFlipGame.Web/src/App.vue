@@ -5,6 +5,7 @@
       <v-toolbar-title>
         <router-link to="/" style="color: inherit"> Epic Flip </router-link>
       </v-toolbar-title>
+      <v-btn :icon="themeIcon" @click="switchTheme"></v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
       <v-list color="teal">
@@ -15,18 +16,18 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link to="/play">
-          <template #prepend>
-            <v-icon>fas fa-chess-rook</v-icon>
-          </template>
-          <v-list-item-title> Play Game </v-list-item-title>
-        </v-list-item>
-
         <v-list-item link to="/instructions">
           <template #prepend>
             <v-icon>fas fa-book</v-icon>
           </template>
           <v-list-item-title>Instructions</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link to="/play">
+          <template #prepend>
+            <v-icon>fas fa-chess-rook</v-icon>
+          </template>
+          <v-list-item-title> Play Game </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -43,7 +44,39 @@
 </template>
 
 <script setup lang="ts">
-const drawer = ref<boolean | null>(false);
+import { useTheme } from "vuetify/lib/framework.mjs";
+
+const theme = useTheme();
+
+const drawer = ref<boolean | null>(null);
+
+const themeIcon = computed(() => {
+  if (theme.global.name.value === "light") {
+    return "fas fa-sun";
+  } else {
+    return "fas fa-moon";
+  }
+});
+
+function switchTheme() {
+  if (theme.global.name.value === "light") {
+    setTheme("dark");
+  } else {
+    setTheme("light");
+  }
+}
+
+function setTheme(themeName: string) {
+  theme.global.name.value = themeName;
+  localStorage.setItem("theme", themeName);
+}
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    theme.global.name.value = savedTheme;
+  }
+});
 </script>
 
 <style lang="scss">
