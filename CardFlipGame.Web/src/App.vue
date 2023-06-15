@@ -29,6 +29,12 @@
           </template>
           <v-list-item-title> Play Game </v-list-item-title>
         </v-list-item>
+        <v-list-item link to="/login">
+          <template #prepend>
+            <v-icon>fas fa-user</v-icon>
+          </template>
+          <v-list-item-title>Login</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 

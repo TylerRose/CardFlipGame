@@ -8,6 +8,24 @@ export class ApplicationUserApiClient extends ModelApiClient<$models.Application
 }
 
 
+export class UserGameApiClient extends ModelApiClient<$models.UserGame> {
+  constructor() { super($metadata.UserGame) }
+}
+
+
+export class GameServiceApiClient extends ServiceApiClient<typeof $metadata.GameService> {
+  constructor() { super($metadata.GameService) }
+  public getUserStats(userId: string | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<$models.UserStats>> {
+    const $method = this.$metadata.methods.getUserStats
+    const $params =  {
+      userId,
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
+}
+
+
 export class LoginServiceApiClient extends ServiceApiClient<typeof $metadata.LoginService> {
   constructor() { super($metadata.LoginService) }
   public login(email: string | null, password: string | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<void>> {
@@ -47,6 +65,13 @@ export class LoginServiceApiClient extends ServiceApiClient<typeof $metadata.Log
   
   public isLoggedIn($config?: AxiosRequestConfig): AxiosPromise<ItemResult<void>> {
     const $method = this.$metadata.methods.isLoggedIn
+    const $params =  {
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
+  public getUserInfo($config?: AxiosRequestConfig): AxiosPromise<ItemResult<$models.ApplicationUser>> {
+    const $method = this.$metadata.methods.getUserInfo
     const $params =  {
     }
     return this.$invoke($method, $params, $config)

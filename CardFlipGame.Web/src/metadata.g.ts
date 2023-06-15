@@ -13,16 +13,9 @@ export const ApplicationUser = domain.types.ApplicationUser = {
   get displayProp() { return this.props.name }, 
   type: "model",
   controllerRoute: "ApplicationUser",
-  get keyProp() { return this.props.applicationUserId }, 
+  get keyProp() { return this.props.id }, 
   behaviorFlags: 7 as BehaviorFlags,
   props: {
-    applicationUserId: {
-      name: "applicationUserId",
-      displayName: "Application User Id",
-      type: "number",
-      role: "primaryKey",
-      hidden: 3 as HiddenAreas,
-    },
     name: {
       name: "name",
       displayName: "Name",
@@ -128,6 +121,161 @@ export const ApplicationUser = domain.types.ApplicationUser = {
   methods: {
   },
   dataSources: {
+  },
+}
+export const UserGame = domain.types.UserGame = {
+  name: "UserGame",
+  displayName: "User Game",
+  get displayProp() { return this.props.userGameId }, 
+  type: "model",
+  controllerRoute: "UserGame",
+  get keyProp() { return this.props.userGameId }, 
+  behaviorFlags: 7 as BehaviorFlags,
+  props: {
+    userGameId: {
+      name: "userGameId",
+      displayName: "User Game Id",
+      type: "number",
+      role: "primaryKey",
+      hidden: 3 as HiddenAreas,
+    },
+    userId: {
+      name: "userId",
+      displayName: "User Id",
+      type: "string",
+      role: "foreignKey",
+      get principalKey() { return (domain.types.ApplicationUser as ModelType).props.id as PrimaryKeyProperty },
+      get principalType() { return (domain.types.ApplicationUser as ModelType) },
+      get navigationProp() { return (domain.types.UserGame as ModelType).props.user as ModelReferenceNavigationProperty },
+      hidden: 3 as HiddenAreas,
+      rules: {
+        required: val => (val != null && val !== '') || "User is required.",
+      }
+    },
+    user: {
+      name: "user",
+      displayName: "User",
+      type: "model",
+      get typeDef() { return (domain.types.ApplicationUser as ModelType) },
+      role: "referenceNavigation",
+      get foreignKey() { return (domain.types.UserGame as ModelType).props.userId as ForeignKeyProperty },
+      get principalKey() { return (domain.types.ApplicationUser as ModelType).props.id as PrimaryKeyProperty },
+      dontSerialize: true,
+    },
+    difficulty: {
+      name: "difficulty",
+      displayName: "Difficulty",
+      type: "number",
+      role: "value",
+    },
+    durationInSeconds: {
+      name: "durationInSeconds",
+      displayName: "Duration In Seconds",
+      type: "number",
+      role: "value",
+    },
+    numberOfMoves: {
+      name: "numberOfMoves",
+      displayName: "Number Of Moves",
+      type: "number",
+      role: "value",
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
+export const UserStats = domain.types.UserStats = {
+  name: "UserStats",
+  displayName: "User Stats",
+  type: "object",
+  props: {
+    userId: {
+      name: "userId",
+      displayName: "User Id",
+      type: "string",
+      role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "User Id is required.",
+      }
+    },
+    user: {
+      name: "user",
+      displayName: "User",
+      type: "model",
+      get typeDef() { return (domain.types.ApplicationUser as ModelType) },
+      role: "value",
+      dontSerialize: true,
+    },
+    averageDurationEasy: {
+      name: "averageDurationEasy",
+      displayName: "Average Duration Easy",
+      type: "number",
+      role: "value",
+    },
+    averageMovesEasy: {
+      name: "averageMovesEasy",
+      displayName: "Average Moves Easy",
+      type: "number",
+      role: "value",
+    },
+    averageDurationMedium: {
+      name: "averageDurationMedium",
+      displayName: "Average Duration Medium",
+      type: "number",
+      role: "value",
+    },
+    averageMovesMedium: {
+      name: "averageMovesMedium",
+      displayName: "Average Moves Medium",
+      type: "number",
+      role: "value",
+    },
+    averageDurationHard: {
+      name: "averageDurationHard",
+      displayName: "Average Duration Hard",
+      type: "number",
+      role: "value",
+    },
+    averageMovesHard: {
+      name: "averageMovesHard",
+      displayName: "Average Moves Hard",
+      type: "number",
+      role: "value",
+    },
+  },
+}
+export const GameService = domain.services.GameService = {
+  name: "GameService",
+  displayName: "Game Service",
+  type: "service",
+  controllerRoute: "GameService",
+  methods: {
+    getUserStats: {
+      name: "getUserStats",
+      displayName: "Get User Stats",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        userId: {
+          name: "userId",
+          displayName: "User Id",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "User Id is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "object",
+        get typeDef() { return (domain.types.UserStats as ObjectType) },
+        role: "value",
+      },
+    },
   },
 }
 export const LoginService = domain.services.LoginService = {
@@ -269,6 +417,21 @@ export const LoginService = domain.services.LoginService = {
         role: "value",
       },
     },
+    getUserInfo: {
+      name: "getUserInfo",
+      displayName: "Get User Info",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "model",
+        get typeDef() { return (domain.types.ApplicationUser as ModelType) },
+        role: "value",
+      },
+    },
   },
 }
 
@@ -277,8 +440,11 @@ interface AppDomain extends Domain {
   }
   types: {
     ApplicationUser: typeof ApplicationUser
+    UserGame: typeof UserGame
+    UserStats: typeof UserStats
   }
   services: {
+    GameService: typeof GameService
     LoginService: typeof LoginService
   }
 }

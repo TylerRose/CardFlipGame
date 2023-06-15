@@ -4,7 +4,6 @@ import * as $apiClients from './api-clients.g'
 import { ViewModel, ListViewModel, ServiceViewModel, DeepPartial, defineProps } from 'coalesce-vue/lib/viewmodel'
 
 export interface ApplicationUserViewModel extends $models.ApplicationUser {
-  applicationUserId: number | null;
   name: string | null;
   id: string | null;
   userName: string | null;
@@ -22,7 +21,7 @@ export interface ApplicationUserViewModel extends $models.ApplicationUser {
   lockoutEnabled: boolean | null;
   accessFailedCount: number | null;
 }
-export class ApplicationUserViewModel extends ViewModel<$models.ApplicationUser, $apiClients.ApplicationUserApiClient, number> implements $models.ApplicationUser  {
+export class ApplicationUserViewModel extends ViewModel<$models.ApplicationUser, $apiClients.ApplicationUserApiClient, string> implements $models.ApplicationUser  {
   
   constructor(initialData?: DeepPartial<$models.ApplicationUser> | null) {
     super($metadata.ApplicationUser, new $apiClients.ApplicationUserApiClient(), initialData)
@@ -34,6 +33,49 @@ export class ApplicationUserListViewModel extends ListViewModel<$models.Applicat
   
   constructor() {
     super($metadata.ApplicationUser, new $apiClients.ApplicationUserApiClient())
+  }
+}
+
+
+export interface UserGameViewModel extends $models.UserGame {
+  userGameId: number | null;
+  userId: string | null;
+  user: ApplicationUserViewModel | null;
+  difficulty: number | null;
+  durationInSeconds: number | null;
+  numberOfMoves: number | null;
+}
+export class UserGameViewModel extends ViewModel<$models.UserGame, $apiClients.UserGameApiClient, number> implements $models.UserGame  {
+  
+  constructor(initialData?: DeepPartial<$models.UserGame> | null) {
+    super($metadata.UserGame, new $apiClients.UserGameApiClient(), initialData)
+  }
+}
+defineProps(UserGameViewModel, $metadata.UserGame)
+
+export class UserGameListViewModel extends ListViewModel<$models.UserGame, $apiClients.UserGameApiClient, UserGameViewModel> {
+  
+  constructor() {
+    super($metadata.UserGame, new $apiClients.UserGameApiClient())
+  }
+}
+
+
+export class GameServiceViewModel extends ServiceViewModel<typeof $metadata.GameService, $apiClients.GameServiceApiClient> {
+  
+  public get getUserStats() {
+    const getUserStats = this.$apiClient.$makeCaller(
+      this.$metadata.methods.getUserStats,
+      (c, userId: string | null) => c.getUserStats(userId),
+      () => ({userId: null as string | null, }),
+      (c, args) => c.getUserStats(args.userId))
+    
+    Object.defineProperty(this, 'getUserStats', {value: getUserStats});
+    return getUserStats
+  }
+  
+  constructor() {
+    super($metadata.GameService, new $apiClients.GameServiceApiClient())
   }
 }
 
@@ -95,6 +137,17 @@ export class LoginServiceViewModel extends ServiceViewModel<typeof $metadata.Log
     return isLoggedIn
   }
   
+  public get getUserInfo() {
+    const getUserInfo = this.$apiClient.$makeCaller(
+      this.$metadata.methods.getUserInfo,
+      (c) => c.getUserInfo(),
+      () => ({}),
+      (c, args) => c.getUserInfo())
+    
+    Object.defineProperty(this, 'getUserInfo', {value: getUserInfo});
+    return getUserInfo
+  }
+  
   constructor() {
     super($metadata.LoginService, new $apiClients.LoginServiceApiClient())
   }
@@ -103,11 +156,14 @@ export class LoginServiceViewModel extends ServiceViewModel<typeof $metadata.Log
 
 const viewModelTypeLookup = ViewModel.typeLookup = {
   ApplicationUser: ApplicationUserViewModel,
+  UserGame: UserGameViewModel,
 }
 const listViewModelTypeLookup = ListViewModel.typeLookup = {
   ApplicationUser: ApplicationUserListViewModel,
+  UserGame: UserGameListViewModel,
 }
 const serviceViewModelTypeLookup = ServiceViewModel.typeLookup = {
+  GameService: GameServiceViewModel,
   LoginService: LoginServiceViewModel,
 }
 

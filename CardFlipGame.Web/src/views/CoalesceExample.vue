@@ -41,6 +41,8 @@ user.$useAutoSave({
 useTitle(() => user.name);
 
 (async function onCreated() {
+  user.name = "Vera";
+  user.$save();
   await user.$load(1);
 })();
 </script>

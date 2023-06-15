@@ -51,6 +51,7 @@ services.AddDbContext<AppDbContext>(options => options
 );
 
 services.AddCoalesce<AppDbContext>();
+services.AddScoped<IGameService, GameService>();
 
 services.AddIdentity<ApplicationUser, IdentityRole>(options => {
     options.SignIn.RequireConfirmedAccount = false;

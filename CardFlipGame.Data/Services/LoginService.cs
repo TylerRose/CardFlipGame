@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using CardFlipGame.Data.Models;
+using IntelliTect.Coalesce.Models;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace CardFlipGame.Data.Services;
 
@@ -87,6 +90,19 @@ public class LoginService : ILoginService
         if (user.Identity?.IsAuthenticated ?? false)
         {
             return true;
+        }
+        else
+        {
+            return "You are not signed in";
+        }
+    }
+
+    public ItemResult<ApplicationUser> GetUserInfo(ClaimsPrincipal user)
+    {
+        if (user.Identity?.IsAuthenticated ?? false)
+        {
+            var callingUserId = user.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
+            return Db.ApplicationUsers.Single(u => u.Id == callingUserId.Value);
         }
         else
         {

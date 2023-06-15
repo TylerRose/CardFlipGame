@@ -20,6 +20,11 @@ export default createRouter({
       component: () => import("./views/Play.vue"),
     },
     {
+      path: "/login",
+      name: "login",
+      component: () => import("./views/login.vue"),
+    },
+    {
       path: "/coalesce-example",
       name: "coalesce-example",
       component: () => import("./views/CoalesceExample.vue"),
