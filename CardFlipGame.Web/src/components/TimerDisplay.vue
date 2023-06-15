@@ -40,10 +40,9 @@ function convertMsToTime(milliseconds: number) {
 .timer {
   position: absolute;
   top: 85px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 20px;
+
   z-index: 9999;
-  padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 </style>
