@@ -1,5 +1,5 @@
 <template>
-  <v-container class="d-flex align-center flex-column">
+  <v-container class="fill-height d-flex align-center justify-center">
     <v-card width="400" class="text-center pa-2">
       <v-card-item>
         <v-card-title>Login</v-card-title>
@@ -9,7 +9,7 @@
         <v-text-field label="Password" v-model="password" />
       </v-card-text>
       <v-btn color="teal" class="mb-4" @click="login()">
-        <v-icon icon="fas fa-check start" /> Submit
+        <v-icon icon="fas fa-check" start /> Submit
       </v-btn>
     </v-card>
   </v-container>
