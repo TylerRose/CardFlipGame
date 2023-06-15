@@ -8,6 +8,7 @@ namespace CardFlipGame.Data.Models;
 public class UserGame
 {
     public int UserGameId { get; set; }
+
     public required string UserName { get; set; }
     public int Difficulty { get; set; }
     public int DurationInSeconds { get; set; }

@@ -7,35 +7,21 @@
 </template>
 <script setup lang="ts">
 import { UserGameViewModel } from "@/viewmodels.g";
+import { GameServiceViewModel } from "@/viewmodels.g";
 
 const userGame = new UserGameViewModel();
+const GameService = new GameServiceViewModel();
 
-userGame.userName = "Vera";
-userGame.difficulty = 2;
-userGame.durationInSeconds = 58;
-userGame.numberOfMoves = 10;
-userGame.$save();
-
-const user2 = new UserGameViewModel();
-user2.userName = "Andrew";
-user2.difficulty = 1;
-user2.durationInSeconds = 23;
-user2.numberOfMoves = 14;
-user2.$save();
-
-// GameService.getGameStats("Vera", 1).then((result) => {
-//   console.log(result.data);
-// });
+// userGame.userName = "Vera";
+// userGame.difficulty = 2;
+// userGame.durationInSeconds = 58;
+// userGame.numberOfMoves = 10;
+// userGame.$save();
 
 userGame.$load(1).then(() => {
   console.log("UserGameViewModel loaded");
-  // userGame.playerStats("Vera", 1).then((result) => {
-  //   console.log(result.data);
-  // });
+  GameService.getUserStats("Vera").then((result) => {
+    console.log(result.data);
+  });
 });
-// console.log(Vera.request.playerStats("Vera", 1));
-
-// function LoadUser() {
-//   console.log(Vera.playerStats("Vera", 1));
-// }
 </script>
