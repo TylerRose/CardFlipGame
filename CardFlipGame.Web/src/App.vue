@@ -29,7 +29,13 @@
           </template>
           <v-list-item-title> Play Game </v-list-item-title>
         </v-list-item>
-        <v-list-item link to="/login">
+        <v-list-item v-if="isLoggedIn" link to="/stats">
+          <template #prepend>
+            <v-icon>fas fa-address-book</v-icon>
+          </template>
+          <v-list-item-title>View Stats</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-else link to="/login">
           <template #prepend>
             <v-icon>fas fa-user</v-icon>
           </template>
@@ -51,10 +57,23 @@
 
 <script setup lang="ts">
 import { useTheme } from "vuetify/lib/framework.mjs";
+import { LoginServiceViewModel } from "@/viewmodels.g";
 
 const theme = useTheme();
 
 const drawer = ref<boolean | null>(null);
+
+const loginService = new LoginServiceViewModel();
+
+const isLoggedIn = ref(false);
+loginService
+  .isLoggedIn()
+  .then(() => {
+    isLoggedIn.value = true;
+  })
+  .catch(() => {
+    isLoggedIn.value = false;
+  });
 
 const themeIcon = computed(() => {
   if (theme.global.name.value === "light") {

@@ -5,7 +5,7 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
-export {}
+export { }
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TimerDisplay: typeof import('./../components/TimerDisplay.vue')['default']
+    VAlert: typeof import('vuetify/components')['VAlert']
     VApp: typeof import('vuetify/components')['VApp']
     VAppBar: typeof import('vuetify/components')['VAppBar']
     VAppBarNavIcon: typeof import('vuetify/components')['VAppBarNavIcon']
@@ -32,8 +33,10 @@ declare module '@vue/runtime-core' {
     VListItemTitle: typeof import('vuetify/components')['VListItemTitle']
     VMain: typeof import('vuetify/components')['VMain']
     VNavigationDrawer: typeof import('vuetify/components')['VNavigationDrawer']
+    VRow: typeof import('vuetify/components')['VRow']
     VSheet: typeof import('vuetify/components')['VSheet']
     VSpacer: typeof import('vuetify/components')['VSpacer']
+    VTable: typeof import('vuetify/components')['VTable']
     VTextField: typeof import('vuetify/components')['VTextField']
     VToolbarTitle: typeof import('vuetify/components')['VToolbarTitle']
   }
