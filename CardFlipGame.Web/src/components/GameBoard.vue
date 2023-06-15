@@ -37,8 +37,10 @@
         <v-card-item>
           <v-card-title>You won! Great job!</v-card-title>
         </v-card-item>
-        <v-card-text class="pa-2">
-          <div class="mb-2">You beat the game in {{ game.timer }} seconds.</div>
+        <v-card-text>
+          <div class="mb-2">
+            {{ gameTimeMessage }}
+          </div>
           <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
           </v-btn>
@@ -68,6 +70,15 @@ const props = defineProps({
 
 const cardSize = 100 / Math.sqrt(props.difficulty * 2) + "%";
 const game = reactive(new FlipGame(props.difficulty));
+
+const gameTimeMessage = computed(() => {
+  const minutes = Math.floor(game.timer / 60);
+  const seconds = game.timer % 60;
+  if (minutes > 0) {
+    return `You beat the game in ${minutes} minutes and ${seconds} seconds.`;
+  }
+  return `You beat the game in ${seconds} seconds.`;
+});
 
 // Show the difficulty selection menu when the user navigates back.
 onMounted(() => {

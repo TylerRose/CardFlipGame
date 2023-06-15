@@ -28,6 +28,7 @@ export class FlipGame {
 
   restartGame() {
     this.isGameOver = false;
+    this.timer = 0;
     this.generateCards();
   }
 
@@ -49,7 +50,7 @@ export class FlipGame {
   }
 
   flip(card: Card) {
-    if (this.timer == 0) {
+    if (this.timer === 0) {
       this.timer = 1;
       this.timerId = setInterval(() => {
         this.timer++;
