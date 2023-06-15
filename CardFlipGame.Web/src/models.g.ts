@@ -2,7 +2,6 @@ import * as metadata from './metadata.g'
 import { Model, DataSource, convertToModel, mapToModel } from 'coalesce-vue/lib/model'
 
 export interface ApplicationUser extends Model<typeof metadata.ApplicationUser> {
-  applicationUserId: number | null
   name: string | null
   id: string | null
   userName: string | null
@@ -41,7 +40,8 @@ export class ApplicationUser {
 
 export interface UserGame extends Model<typeof metadata.UserGame> {
   userGameId: number | null
-  userName: string | null
+  userId: string | null
+  user: ApplicationUser | null
   difficulty: number | null
   durationInSeconds: number | null
   numberOfMoves: number | null
@@ -66,7 +66,8 @@ export class UserGame {
 
 
 export interface UserStats extends Model<typeof metadata.UserStats> {
-  name: string | null
+  userId: string | null
+  user: ApplicationUser | null
   averageDurationEasy: number | null
   averageMovesEasy: number | null
   averageDurationMedium: number | null

@@ -12,7 +12,6 @@ namespace CardFlipGame.Web.Models
     {
         public ApplicationUserDtoGen() { }
 
-        private int? _ApplicationUserId;
         private string _Name;
         private string _Id;
         private string _UserName;
@@ -30,11 +29,6 @@ namespace CardFlipGame.Web.Models
         private bool? _LockoutEnabled;
         private int? _AccessFailedCount;
 
-        public int? ApplicationUserId
-        {
-            get => _ApplicationUserId;
-            set { _ApplicationUserId = value; Changed(nameof(ApplicationUserId)); }
-        }
         public string Name
         {
             get => _Name;
@@ -124,7 +118,6 @@ namespace CardFlipGame.Web.Models
             if (obj == null) return;
             var includes = context.Includes;
 
-            this.ApplicationUserId = obj.ApplicationUserId;
             this.Name = obj.Name;
             this.Id = obj.Id;
             this.UserName = obj.UserName;
@@ -152,7 +145,6 @@ namespace CardFlipGame.Web.Models
 
             if (OnUpdate(entity, context)) return;
 
-            if (ShouldMapTo(nameof(ApplicationUserId))) entity.ApplicationUserId = (ApplicationUserId ?? entity.ApplicationUserId);
             if (ShouldMapTo(nameof(Name))) entity.Name = Name;
             if (ShouldMapTo(nameof(Id))) entity.Id = Id;
             if (ShouldMapTo(nameof(UserName))) entity.UserName = UserName;
@@ -184,7 +176,6 @@ namespace CardFlipGame.Web.Models
             };
 
             if (OnUpdate(entity, context)) return entity;
-            if (ShouldMapTo(nameof(ApplicationUserId))) entity.ApplicationUserId = (ApplicationUserId ?? entity.ApplicationUserId);
             if (ShouldMapTo(nameof(Id))) entity.Id = Id;
             if (ShouldMapTo(nameof(UserName))) entity.UserName = UserName;
             if (ShouldMapTo(nameof(NormalizedUserName))) entity.NormalizedUserName = NormalizedUserName;

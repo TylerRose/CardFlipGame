@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CardFlipGame.Data.Models;
 
-namespace CardFlipGame.Data.Models;
+namespace CardFlipGame.Data.Dto;
 public class UserStats
 {
-    public required string Name { get; set; }
+    public string UserId { get; set; } = null!;
+    public ApplicationUser User { get; set; } = null!;
     public int AverageDurationEasy { get; set; }
     public int AverageMovesEasy { get; set; }
 

@@ -4,7 +4,6 @@ import * as $apiClients from './api-clients.g'
 import { ViewModel, ListViewModel, ServiceViewModel, DeepPartial, defineProps } from 'coalesce-vue/lib/viewmodel'
 
 export interface ApplicationUserViewModel extends $models.ApplicationUser {
-  applicationUserId: number | null;
   name: string | null;
   id: string | null;
   userName: string | null;
@@ -22,7 +21,7 @@ export interface ApplicationUserViewModel extends $models.ApplicationUser {
   lockoutEnabled: boolean | null;
   accessFailedCount: number | null;
 }
-export class ApplicationUserViewModel extends ViewModel<$models.ApplicationUser, $apiClients.ApplicationUserApiClient, number> implements $models.ApplicationUser  {
+export class ApplicationUserViewModel extends ViewModel<$models.ApplicationUser, $apiClients.ApplicationUserApiClient, string> implements $models.ApplicationUser  {
   
   constructor(initialData?: DeepPartial<$models.ApplicationUser> | null) {
     super($metadata.ApplicationUser, new $apiClients.ApplicationUserApiClient(), initialData)
@@ -40,7 +39,8 @@ export class ApplicationUserListViewModel extends ListViewModel<$models.Applicat
 
 export interface UserGameViewModel extends $models.UserGame {
   userGameId: number | null;
-  userName: string | null;
+  userId: string | null;
+  user: ApplicationUserViewModel | null;
   difficulty: number | null;
   durationInSeconds: number | null;
   numberOfMoves: number | null;
@@ -66,9 +66,9 @@ export class GameServiceViewModel extends ServiceViewModel<typeof $metadata.Game
   public get getUserStats() {
     const getUserStats = this.$apiClient.$makeCaller(
       this.$metadata.methods.getUserStats,
-      (c, userName: string | null) => c.getUserStats(userName),
-      () => ({userName: null as string | null, }),
-      (c, args) => c.getUserStats(args.userName))
+      (c, userId: string | null) => c.getUserStats(userId),
+      () => ({userId: null as string | null, }),
+      (c, args) => c.getUserStats(args.userId))
     
     Object.defineProperty(this, 'getUserStats', {value: getUserStats});
     return getUserStats

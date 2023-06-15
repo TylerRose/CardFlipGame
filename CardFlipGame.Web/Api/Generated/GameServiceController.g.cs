@@ -25,12 +25,12 @@ namespace CardFlipGame.Web.Api
     public partial class GameServiceController : Controller
     {
         protected ClassViewModel GeneratedForClassViewModel { get; }
-        protected CardFlipGame.Data.Models.IGameService Service { get; }
+        protected CardFlipGame.Data.Services.IGameService Service { get; }
         protected CrudContext Context { get; }
 
-        public GameServiceController(CrudContext context, CardFlipGame.Data.Models.IGameService service)
+        public GameServiceController(CrudContext context, CardFlipGame.Data.Services.IGameService service)
         {
-            GeneratedForClassViewModel = context.ReflectionRepository.GetClassViewModel<CardFlipGame.Data.Models.IGameService>();
+            GeneratedForClassViewModel = context.ReflectionRepository.GetClassViewModel<CardFlipGame.Data.Services.IGameService>();
             Service = service;
             Context = context;
         }
@@ -40,28 +40,28 @@ namespace CardFlipGame.Web.Api
         /// </summary>
         [HttpPost("GetUserStats")]
         [Authorize]
-        public virtual async Task<ItemResult<System.Collections.Generic.ICollection<UserStatsDtoGen>>> GetUserStats(
-            [FromForm(Name = "userName")] string userName)
+        public virtual async Task<ItemResult<UserStatsDtoGen>> GetUserStats(
+            [FromForm(Name = "userId")] string userId)
         {
             var _params = new
             {
-                userName = userName
+                userId = userId
             };
 
             if (Context.Options.ValidateAttributesForMethods)
             {
                 var _validationResult = ItemResult.FromParameterValidation(
                     GeneratedForClassViewModel!.MethodByName("GetUserStats"), _params, HttpContext.RequestServices);
-                if (!_validationResult.WasSuccessful) return new ItemResult<System.Collections.Generic.ICollection<UserStatsDtoGen>>(_validationResult);
+                if (!_validationResult.WasSuccessful) return new ItemResult<UserStatsDtoGen>(_validationResult);
             }
 
             IncludeTree includeTree = null;
             var _mappingContext = new MappingContext(User);
             var _methodResult = await Service.GetUserStats(
-                _params.userName
+                _params.userId
             );
-            var _result = new ItemResult<System.Collections.Generic.ICollection<UserStatsDtoGen>>();
-            _result.Object = _methodResult?.ToList().Select(o => Mapper.MapToDto<CardFlipGame.Data.Models.UserStats, UserStatsDtoGen>(o, _mappingContext, includeTree)).ToList();
+            var _result = new ItemResult<UserStatsDtoGen>();
+            _result.Object = Mapper.MapToDto<CardFlipGame.Data.Dto.UserStats, UserStatsDtoGen>(_methodResult, _mappingContext, includeTree);
             return _result;
         }
     }

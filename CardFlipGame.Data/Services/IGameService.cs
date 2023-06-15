@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CardFlipGame.Data.Dto;
 
-namespace CardFlipGame.Data.Models;
+namespace CardFlipGame.Data.Services;
 
 [Coalesce, Service]
 public interface IGameService
 {
-    Task<List<UserStats>> GetUserStats(string userName);
+    Task<UserStats> GetUserStats(string userId);
 }

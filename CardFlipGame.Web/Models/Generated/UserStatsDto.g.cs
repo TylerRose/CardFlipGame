@@ -8,11 +8,12 @@ using System.Security.Claims;
 
 namespace CardFlipGame.Web.Models
 {
-    public partial class UserStatsDtoGen : GeneratedDto<CardFlipGame.Data.Models.UserStats>
+    public partial class UserStatsDtoGen : GeneratedDto<CardFlipGame.Data.Dto.UserStats>
     {
         public UserStatsDtoGen() { }
 
-        private string _Name;
+        private string _UserId;
+        private CardFlipGame.Web.Models.ApplicationUserDtoGen _User;
         private int? _AverageDurationEasy;
         private int? _AverageMovesEasy;
         private int? _AverageDurationMedium;
@@ -20,10 +21,15 @@ namespace CardFlipGame.Web.Models
         private int? _AverageDurationHard;
         private int? _AverageMovesHard;
 
-        public string Name
+        public string UserId
         {
-            get => _Name;
-            set { _Name = value; Changed(nameof(Name)); }
+            get => _UserId;
+            set { _UserId = value; Changed(nameof(UserId)); }
+        }
+        public CardFlipGame.Web.Models.ApplicationUserDtoGen User
+        {
+            get => _User;
+            set { _User = value; Changed(nameof(User)); }
         }
         public int? AverageDurationEasy
         {
@@ -59,30 +65,33 @@ namespace CardFlipGame.Web.Models
         /// <summary>
         /// Map from the domain object to the properties of the current DTO instance.
         /// </summary>
-        public override void MapFrom(CardFlipGame.Data.Models.UserStats obj, IMappingContext context, IncludeTree tree = null)
+        public override void MapFrom(CardFlipGame.Data.Dto.UserStats obj, IMappingContext context, IncludeTree tree = null)
         {
             if (obj == null) return;
             var includes = context.Includes;
 
-            this.Name = obj.Name;
+            this.UserId = obj.UserId;
             this.AverageDurationEasy = obj.AverageDurationEasy;
             this.AverageMovesEasy = obj.AverageMovesEasy;
             this.AverageDurationMedium = obj.AverageDurationMedium;
             this.AverageMovesMedium = obj.AverageMovesMedium;
             this.AverageDurationHard = obj.AverageDurationHard;
             this.AverageMovesHard = obj.AverageMovesHard;
+            if (tree == null || tree[nameof(this.User)] != null)
+                this.User = obj.User.MapToDto<CardFlipGame.Data.Models.ApplicationUser, ApplicationUserDtoGen>(context, tree?[nameof(this.User)]);
+
         }
 
         /// <summary>
         /// Map from the current DTO instance to the domain object.
         /// </summary>
-        public override void MapTo(CardFlipGame.Data.Models.UserStats entity, IMappingContext context)
+        public override void MapTo(CardFlipGame.Data.Dto.UserStats entity, IMappingContext context)
         {
             var includes = context.Includes;
 
             if (OnUpdate(entity, context)) return;
 
-            if (ShouldMapTo(nameof(Name))) entity.Name = Name;
+            if (ShouldMapTo(nameof(UserId))) entity.UserId = UserId;
             if (ShouldMapTo(nameof(AverageDurationEasy))) entity.AverageDurationEasy = (AverageDurationEasy ?? entity.AverageDurationEasy);
             if (ShouldMapTo(nameof(AverageMovesEasy))) entity.AverageMovesEasy = (AverageMovesEasy ?? entity.AverageMovesEasy);
             if (ShouldMapTo(nameof(AverageDurationMedium))) entity.AverageDurationMedium = (AverageDurationMedium ?? entity.AverageDurationMedium);
@@ -94,23 +103,10 @@ namespace CardFlipGame.Web.Models
         /// <summary>
         /// Map from the current DTO instance to a new instance of the domain object.
         /// </summary>
-        public override CardFlipGame.Data.Models.UserStats MapToNew(IMappingContext context)
+        public override CardFlipGame.Data.Dto.UserStats MapToNew(IMappingContext context)
         {
-            var includes = context.Includes;
-
-            var entity = new CardFlipGame.Data.Models.UserStats()
-            {
-                Name = Name,
-            };
-
-            if (OnUpdate(entity, context)) return entity;
-            if (ShouldMapTo(nameof(AverageDurationEasy))) entity.AverageDurationEasy = (AverageDurationEasy ?? entity.AverageDurationEasy);
-            if (ShouldMapTo(nameof(AverageMovesEasy))) entity.AverageMovesEasy = (AverageMovesEasy ?? entity.AverageMovesEasy);
-            if (ShouldMapTo(nameof(AverageDurationMedium))) entity.AverageDurationMedium = (AverageDurationMedium ?? entity.AverageDurationMedium);
-            if (ShouldMapTo(nameof(AverageMovesMedium))) entity.AverageMovesMedium = (AverageMovesMedium ?? entity.AverageMovesMedium);
-            if (ShouldMapTo(nameof(AverageDurationHard))) entity.AverageDurationHard = (AverageDurationHard ?? entity.AverageDurationHard);
-            if (ShouldMapTo(nameof(AverageMovesHard))) entity.AverageMovesHard = (AverageMovesHard ?? entity.AverageMovesHard);
-
+            var entity = new CardFlipGame.Data.Dto.UserStats();
+            MapTo(entity, context);
             return entity;
         }
     }
