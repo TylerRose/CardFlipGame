@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using CardFlipGame.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CardFlipGame.Data;
 
 [Coalesce]
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
     public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
 
@@ -24,6 +24,17 @@ public class AppDbContext : DbContext
         foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
         {
             relationship.DeleteBehavior = DeleteBehavior.Restrict;
+        }
+    }
+    public void Initialize()
+    {
+        try
+        {
+            Database.Migrate();
+        }
+        catch (InvalidOperationException e) when (e.Message == "No service for type 'Microsoft.EntityFrameworkCore.Migrations.IMigrator' has been registered.")
+        {
+            // this exception is expected when using an InMemory database
         }
     }
 }
