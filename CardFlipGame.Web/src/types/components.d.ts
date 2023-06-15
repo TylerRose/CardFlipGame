@@ -33,6 +33,7 @@ declare module '@vue/runtime-core' {
     VNavigationDrawer: typeof import('vuetify/components')['VNavigationDrawer']
     VSheet: typeof import('vuetify/components')['VSheet']
     VSpacer: typeof import('vuetify/components')['VSpacer']
+    VTextField: typeof import('vuetify/components')['VTextField']
     VToolbarTitle: typeof import('vuetify/components')['VToolbarTitle']
   }
 }

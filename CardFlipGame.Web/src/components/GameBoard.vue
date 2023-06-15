@@ -55,7 +55,7 @@
 
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
-import { FlipGame, Difficulty } from "@/scripts/gameService";
+import {Difficulty, FlipGame} from "@/scripts/gameService";
 import { VueFlip } from "vue-flip";
 import TimerDisplay from "@/components/TimerDisplay.vue";
 

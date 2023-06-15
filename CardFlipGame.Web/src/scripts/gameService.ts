@@ -1,4 +1,5 @@
 import { IconMachine } from "./iconMachine";
+import {ComputedRef} from "vue";
 
 export enum Difficulty {
   Noob = 2,
@@ -10,6 +11,7 @@ export enum Difficulty {
 export interface Card {
   icon: string;
   active: boolean;
+  activeBy?: number;
   matched: boolean;
 }
 
@@ -34,7 +36,7 @@ export class FlipGame {
 
   generateCards(): void {
     this.cards.splice(0);
-    const icons = this.iconMachine.getIcons(this.difficulty.valueOf());
+    const icons = this.iconMachine.getIcons(this.difficulty);
     icons.forEach((icon) => {
       this.cards.push({ icon, active: false, matched: false });
       this.cards.push({ icon, active: false, matched: false });
@@ -43,7 +45,7 @@ export class FlipGame {
   }
 
   checkGameState() {
-    if (this.cards.filter((x) => x.matched === false).length === 0) {
+    if (this.cards.filter((x) => !x.matched).length === 0) {
       this.isGameOver = true;
       clearInterval(this.timerId);
     }
