@@ -37,6 +37,7 @@
           <v-card-title>You won! Great job!</v-card-title>
         </v-card-item>
         <v-card-text class="pa-2">
+          <v-btn @click="storeGameResult()"> Save Game </v-btn>
           <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
           </v-btn>
@@ -53,6 +54,12 @@
 import { reactive, onMounted } from "vue";
 import { FlipGame, Difficulty } from "@/scripts/gameService";
 import { VueFlip } from "vue-flip";
+import {
+  ApplicationUserViewModel,
+  LoginServiceViewModel,
+  UserGameViewModel,
+} from "@/viewmodels.g";
+import { ApplicationUser } from "@/models.g";
 
 const emit = defineEmits(["stopPlaying"]);
 
@@ -65,6 +72,38 @@ const props = defineProps({
 
 const cardSize = 100 / Math.sqrt(props.difficulty * 2) + "%";
 const game = reactive(new FlipGame(props.difficulty));
+
+const loginService = new LoginServiceViewModel();
+const userGame = new UserGameViewModel();
+
+async function storeGameResult() {
+  if (await loginService.isLoggedIn()) {
+    var user: ApplicationUser = (await loginService.getUserInfo()).data.object!;
+    var applicationUser = new ApplicationUserViewModel(user);
+    userGame.userId = user.id;
+    userGame.user = applicationUser;
+
+    switch (props.difficulty) {
+      case Difficulty.Easy:
+        userGame.difficulty = 1;
+        break;
+      case Difficulty.Medium:
+        userGame.difficulty = 2;
+        break;
+      case Difficulty.Hard:
+        userGame.difficulty = 3;
+        break;
+      default:
+        userGame.difficulty = 1;
+    }
+    userGame.durationInSeconds = game.durationInSeconds;
+    userGame.numberOfMoves = game.numberOfMoves;
+    userGame.$save();
+    console.log("Game saved");
+  } else {
+    console.log("User not logged in");
+  }
+}
 
 // Show the difficulty selection menu when the user navigates back.
 onMounted(() => {

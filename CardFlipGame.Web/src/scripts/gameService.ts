@@ -18,6 +18,8 @@ export class FlipGame {
   iconMachine: IconMachine = new IconMachine();
   isGameOver: boolean = false;
   difficulty: Difficulty = Difficulty.Easy;
+  durationInSeconds: number = 0;
+  numberOfMoves: number = 0;
 
   constructor(difficulty: Difficulty = Difficulty.Easy) {
     this.difficulty = difficulty;
