@@ -20,7 +20,7 @@
           >
             <template v-slot:front>
               <v-sheet
-                color="red"
+                color="grey"
                 class="align-center justify-center rounded-lg w-100 h-100 d-flex"
               />
             </template>

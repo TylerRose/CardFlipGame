@@ -55,7 +55,12 @@ public class LoginService : ILoginService
                 await Db.SaveChangesAsync();
                 return true;
             }
-            return $"Unable to create the account: {createUserResult.Errors.ToArray().ToList()}";
+            var errorsList = "";
+            createUserResult.Errors.ToList().ForEach(error =>
+            {
+                errorsList += error.Code + " - " + error.Description + ",\n";
+            });
+            return $"Unable to create the account: {errorsList}";
         }
     }
 

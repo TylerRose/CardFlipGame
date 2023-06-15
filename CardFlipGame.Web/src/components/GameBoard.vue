@@ -12,7 +12,7 @@
       <template v-slot:front>
         <v-sheet
           @click="!card.matched ? game.flip(card) : null"
-          :color="card.matched ? 'green' : 'red'"
+          :color="card.matched ? 'grey-darken-2' : 'grey'"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
           <v-icon
@@ -25,10 +25,14 @@
       <template v-slot:back>
         <v-sheet
           @click="!card.matched ? game.flip(card) : null"
-          color="teal"
+          :color="card.color"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
-          <v-icon class="icon-size" :icon="game.cards[index].icon" />
+          <v-icon
+            color="white"
+            class="icon-size"
+            :icon="game.cards[index].icon"
+          />
         </v-sheet>
       </template>
     </vue-flip>
