@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height pa-1" fluid>
-    <TimerDisplay :milliseconds="game.timer * 1000" class="timer" />
+    <TimerDisplay :milliseconds="game.timer * 1000" class="timer"/>
     <vue-flip
       v-model="card.active"
       :width="cardSize"
@@ -28,7 +28,7 @@
           color="teal"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
-          <v-icon class="icon-size" :icon="game.cards[index].icon" />
+          <v-icon class="icon-size" :icon="game.cards[index].icon"/>
         </v-sheet>
       </template>
     </vue-flip>
@@ -41,7 +41,20 @@
           <div class="mb-2">
             {{ gameTimeMessage }}
           </div>
-          <v-btn @click="storeGameResult()"> Save Game </v-btn>
+          <div>
+            <v-btn
+              v-if="isLoggedIn"
+              @click="storeGameResult()"
+              :disabled="userGame.$save.wasSuccessful"
+              :loading="userGame.$save.isLoading"
+            >
+              <v-icon v-if="userGame.$save.wasSuccessful" class="fas fa-check start" color="green"/>
+              Save Game
+            </v-btn>
+            <router-link v-else to="/login">
+              Please log in to save games
+            </router-link>
+          </div>
           <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
           </v-btn>
@@ -55,15 +68,15 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted } from "vue";
-import { FlipGame, Difficulty } from "@/scripts/gameService";
-import { VueFlip } from "vue-flip";
+import {reactive, onMounted} from "vue";
+import {FlipGame, Difficulty} from "@/scripts/gameService";
+import {VueFlip} from "vue-flip";
 import {
   ApplicationUserViewModel,
   LoginServiceViewModel,
   UserGameViewModel,
 } from "@/viewmodels.g";
-import { ApplicationUser } from "@/models.g";
+import {ApplicationUser} from "@/models.g";
 import TimerDisplay from "@/components/TimerDisplay.vue";
 
 const emit = defineEmits(["stopPlaying"]);
@@ -89,6 +102,13 @@ const gameTimeMessage = computed(() => {
 
 const loginService = new LoginServiceViewModel();
 const userGame = new UserGameViewModel();
+
+const isLoggedIn = ref(false);
+loginService.isLoggedIn().then(() => {
+  isLoggedIn.value = true;
+}).catch(() => {
+  isLoggedIn.value = false;
+})
 
 async function storeGameResult() {
   try {
