@@ -2,7 +2,7 @@
   <v-container class="fill-height d-flex align-center justify-center">
     <v-card class="pa-2 shadow">
       <v-card-title>Stats</v-card-title>
-      <v-divider v-divider />
+      <v-divider />
       <v-alert
         v-if="isGetUserStatsFailed"
         type="error"
