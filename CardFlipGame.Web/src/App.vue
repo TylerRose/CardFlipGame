@@ -1,11 +1,39 @@
 <template>
-  <v-app id="vue-app">
+  <v-app id="vue-app" :key="user.id">
     <v-app-bar color="teal">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
         <router-link to="/" style="color: inherit"> Epic Flip </router-link>
       </v-toolbar-title>
       <v-btn :icon="themeIcon" @click="switchTheme"></v-btn>
+      <v-menu
+        v-if="isLoggedIn"
+        v-model="menu"
+        :close-on-content-click="false"
+        location="bottom"
+      >
+        <template v-slot:activator="{ props }">
+          <v-btn color="white" v-bind="props" class="mx-2" icon="fas fa-user" />
+        </template>
+        <v-card min-width="250">
+          <v-card-item>
+            <v-card-title> {{ user.name }} </v-card-title>
+            <v-card-subtitle> {{ user.email }} </v-card-subtitle>
+          </v-card-item>
+          <v-divider />
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              v-if="isLoggedIn"
+              color="teal"
+              variant="elevated"
+              @click="logout"
+            >
+              Log Out
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-menu>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
       <v-list color="teal">
@@ -57,7 +85,10 @@
 
 <script setup lang="ts">
 import { useTheme } from "vuetify/lib/framework.mjs";
-import { LoginServiceViewModel } from "@/viewmodels.g";
+import {
+  LoginServiceViewModel,
+  ApplicationUserViewModel,
+} from "@/viewmodels.g";
 
 const theme = useTheme();
 
@@ -65,11 +96,17 @@ const drawer = ref<boolean | null>(null);
 
 const loginService = new LoginServiceViewModel();
 
+const menu = ref(false);
+
 const isLoggedIn = ref(false);
+
+const user = ref(new ApplicationUserViewModel());
+
 loginService
   .isLoggedIn()
   .then(() => {
     isLoggedIn.value = true;
+    getUser();
   })
   .catch(() => {
     isLoggedIn.value = false;
@@ -82,6 +119,18 @@ const themeIcon = computed(() => {
     return "fas fa-moon";
   }
 });
+
+function getUser() {
+  loginService.getUserInfo().then((result) => {
+    user.value = new ApplicationUserViewModel(result.data.object!);
+  });
+}
+
+async function logout() {
+  await loginService.logout();
+  isLoggedIn.value = false;
+  menu.value = false;
+}
 
 function switchTheme() {
   if (theme.global.name.value === "light") {
