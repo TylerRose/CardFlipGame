@@ -1,5 +1,5 @@
 <template>
-  <v-app id="vue-app" :key="user.id">
+  <v-app id="vue-app" :key="user.id ?? undefined">
     <v-app-bar color="teal">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
