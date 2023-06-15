@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height pa-0" fluid>
+  <v-container class="fill-height pa-1" fluid>
     <TimerDisplay :milliseconds="game.timer * 1000" class="timer" />
     <vue-flip
       v-model="card.active"
@@ -37,7 +37,7 @@
         <v-card-item>
           <v-card-title>You won! Great job!</v-card-title>
         </v-card-item>
-        <v-card-text>
+        <v-card-text class="pa-2">
           <div class="mb-2">
             {{ gameTimeMessage }}
           </div>
