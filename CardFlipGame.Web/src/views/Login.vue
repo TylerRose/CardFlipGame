@@ -5,8 +5,8 @@
         <v-card-title>Login</v-card-title>
       </v-card-item>
       <v-card-text class="my-4">
-        <v-text-field label="Username" v-model="username" />
-        <v-text-field label="Password" v-model="password" />
+        <v-text-field label="Email" v-model="email" type="text" />
+        <v-text-field label="Password" v-model="password" type="password" />
       </v-card-text>
       <v-btn color="teal" class="mb-4" @click="login()">
         <v-icon icon="fas fa-check" start /> Submit
@@ -18,13 +18,13 @@
 <script setup lang="ts">
 import { LoginServiceViewModel } from "@/viewmodels.g";
 
-const username = ref("");
+const email = ref("");
 const password = ref("");
 
 const loginService = new LoginServiceViewModel();
 
 async function login() {
-  await loginService.login(username.value, password.value);
+  await loginService.login(email.value, password.value);
   console.log(await loginService.isLoggedIn());
 }
 </script>
