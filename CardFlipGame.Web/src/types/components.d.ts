@@ -22,7 +22,6 @@ declare module '@vue/runtime-core' {
     VBtn: typeof import('vuetify/components')['VBtn']
     VCard: typeof import('vuetify/components')['VCard']
     VCardItem: typeof import('vuetify/components')['VCardItem']
-    VCardSubtitle: typeof import('vuetify/components')['VCardSubtitle']
     VCardText: typeof import('vuetify/components')['VCardText']
     VCardTitle: typeof import('vuetify/components')['VCardTitle']
     VContainer: typeof import('vuetify/components')['VContainer']
@@ -34,10 +33,10 @@ declare module '@vue/runtime-core' {
     VListItemTitle: typeof import('vuetify/components')['VListItemTitle']
     VMain: typeof import('vuetify/components')['VMain']
     VNavigationDrawer: typeof import('vuetify/components')['VNavigationDrawer']
+    VProgressCircular: typeof import('vuetify/components')['VProgressCircular']
     VSheet: typeof import('vuetify/components')['VSheet']
     VSpacer: typeof import('vuetify/components')['VSpacer']
     VTable: typeof import('vuetify/components')['VTable']
-    VTextField: typeof import('vuetify/components')['VTextField']
     VToolbarTitle: typeof import('vuetify/components')['VToolbarTitle']
   }
 }

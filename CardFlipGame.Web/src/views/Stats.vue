@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height d-flex align-center justify-center">
-    <v-card class="pa-2 shadow">
+    <v-card class="pa-2 shadow" width="400">
       <v-card-title>Stats</v-card-title>
       <v-divider />
       <v-alert
@@ -11,18 +11,12 @@
         class="ma-4 mt-5"
       />
       <v-card-text v-else>
-        <v-table hover style="background: transparent">
-          <thead>
-            <tr>
-              <th class="text-left">Attribute</th>
-              <th class="text-left">Value</th>
-            </tr>
-          </thead>
+        <v-table
+          v-if="!stats == undefined"
+          hover
+          style="background: transparent"
+        >
           <tbody>
-            <tr>
-              <td>User</td>
-              <td>{{ stats.user }}</td>
-            </tr>
             <tr>
               <td>Average Easy Moves</td>
               <td>{{ stats.averageMovesEasy }}</td>
@@ -49,6 +43,7 @@
             </tr>
           </tbody>
         </v-table>
+        <v-progress-circular v-else indeterminate />
       </v-card-text>
     </v-card>
   </v-container>
@@ -61,7 +56,7 @@ import { ApplicationUser, UserStats } from "@/models.g";
 const gameService = new GameServiceViewModel();
 const loginService = new LoginServiceViewModel();
 
-var stats = reactive(new UserStats());
+const stats = ref({} as UserStats);
 const isGetUserStatsFailed = ref(false);
 
 getUserStats();
@@ -72,14 +67,7 @@ async function getUserStats() {
     var user: ApplicationUser = (await loginService.getUserInfo()).data.object!;
     var userGames = await gameService.getUserStats(user.id);
 
-    const newStats = userGames.data.object!;
-    stats.user = newStats.user;
-    stats.averageMovesEasy = newStats.averageMovesEasy;
-    stats.averageMovesMedium = newStats.averageMovesMedium;
-    stats.averageMovesHard = newStats.averageMovesHard;
-    stats.averageDurationEasy = newStats.averageDurationEasy;
-    stats.averageDurationMedium = newStats.averageDurationMedium;
-    stats.averageDurationHard = newStats.averageDurationHard;
+    stats.value = userGames.data.object!;
     console.log("Successfully retrieved user stats");
   } catch (e) {
     console.log(e);
