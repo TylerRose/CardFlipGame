@@ -11,11 +11,7 @@
         class="ma-4 mt-5"
       />
       <v-card-text v-else>
-        <v-table
-          v-if="stats !== undefined"
-          hover
-          style="background: transparent"
-        >
+        <v-table v-if="stats !== null" hover style="background: transparent">
           <tbody>
             <tr>
               <td>Average Easy Moves</td>
@@ -56,7 +52,7 @@ import { ApplicationUser, UserStats } from "@/models.g";
 const gameService = new GameServiceViewModel();
 const loginService = new LoginServiceViewModel();
 
-const stats = ref({} as UserStats);
+const stats = ref(null as UserStats | null);
 const isGetUserStatsFailed = ref(false);
 
 getUserStats();
