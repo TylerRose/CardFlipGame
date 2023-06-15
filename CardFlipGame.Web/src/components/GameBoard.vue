@@ -47,11 +47,13 @@
               @click="storeGameResult()"
               :disabled="userGame.$save.wasSuccessful ? true : false"
               :loading="userGame.$save.isLoading"
+              class="mb-1"
+              color="green"
             >
               <v-icon
                 v-if="userGame.$save.wasSuccessful"
-                class="fas fa-check start"
-                color="green"
+                class="fas fa-check"
+                start
               />
               Save Game
             </v-btn>
