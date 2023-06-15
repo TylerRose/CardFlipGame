@@ -417,6 +417,21 @@ export const LoginService = domain.services.LoginService = {
         role: "value",
       },
     },
+    getUserInfo: {
+      name: "getUserInfo",
+      displayName: "Get User Info",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "model",
+        get typeDef() { return (domain.types.ApplicationUser as ModelType) },
+        role: "value",
+      },
+    },
   },
 }
 

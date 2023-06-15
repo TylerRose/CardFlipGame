@@ -1,3 +1,4 @@
+using CardFlipGame.Data.Models;
 using IntelliTect.Coalesce;
 using IntelliTect.Coalesce.DataAnnotations;
 using IntelliTect.Coalesce.Models;
@@ -22,4 +23,8 @@ public interface ILoginService
 
     [Execute(PermissionLevel = SecurityPermissionLevels.AllowAll)]
     ItemResult IsLoggedIn(ClaimsPrincipal user);
+
+    [Execute(PermissionLevel = SecurityPermissionLevels.AllowAuthorized)]
+    ItemResult<ApplicationUser> GetUserInfo(ClaimsPrincipal user);
+
 }

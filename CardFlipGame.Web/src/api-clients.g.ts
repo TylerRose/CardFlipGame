@@ -70,6 +70,13 @@ export class LoginServiceApiClient extends ServiceApiClient<typeof $metadata.Log
     return this.$invoke($method, $params, $config)
   }
   
+  public getUserInfo($config?: AxiosRequestConfig): AxiosPromise<ItemResult<$models.ApplicationUser>> {
+    const $method = this.$metadata.methods.getUserInfo
+    const $params =  {
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
 }
 
 

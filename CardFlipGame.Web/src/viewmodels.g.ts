@@ -137,6 +137,17 @@ export class LoginServiceViewModel extends ServiceViewModel<typeof $metadata.Log
     return isLoggedIn
   }
   
+  public get getUserInfo() {
+    const getUserInfo = this.$apiClient.$makeCaller(
+      this.$metadata.methods.getUserInfo,
+      (c) => c.getUserInfo(),
+      () => ({}),
+      (c, args) => c.getUserInfo())
+    
+    Object.defineProperty(this, 'getUserInfo', {value: getUserInfo});
+    return getUserInfo
+  }
+  
   constructor() {
     super($metadata.LoginService, new $apiClients.LoginServiceApiClient())
   }
