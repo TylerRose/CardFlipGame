@@ -18,6 +18,8 @@ export class FlipGame {
   iconMachine: IconMachine = new IconMachine();
   isGameOver: boolean = false;
   difficulty: Difficulty = Difficulty.Easy;
+  timer: number = 0;
+  timerId: any;
 
   constructor(difficulty: Difficulty = Difficulty.Easy) {
     this.difficulty = difficulty;
@@ -26,6 +28,7 @@ export class FlipGame {
 
   restartGame() {
     this.isGameOver = false;
+    this.timer = 0;
     this.generateCards();
   }
 
@@ -42,10 +45,18 @@ export class FlipGame {
   checkGameState() {
     if (this.cards.filter((x) => x.matched === false).length === 0) {
       this.isGameOver = true;
+      clearInterval(this.timerId);
     }
   }
 
   flip(card: Card) {
+    if (this.timer === 0) {
+      this.timer = 1;
+      this.timerId = setInterval(() => {
+        this.timer++;
+      }, 1000);
+    }
+
     if (card.active) return;
     const activeCards = this.cards.filter((x) => x.active);
     if (activeCards.length === 2) return;

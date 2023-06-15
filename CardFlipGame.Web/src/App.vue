@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-const drawer = ref<boolean | null>(null);
+const drawer = ref<boolean | null>(false);
 </script>
 
 <style lang="scss">
