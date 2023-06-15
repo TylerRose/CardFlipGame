@@ -270,6 +270,147 @@ export const GameService = domain.services.GameService = {
     },
   },
 }
+export const LoginService = domain.services.LoginService = {
+  name: "LoginService",
+  displayName: "Login Service",
+  type: "service",
+  controllerRoute: "LoginService",
+  methods: {
+    login: {
+      name: "login",
+      displayName: "Login",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        email: {
+          name: "email",
+          displayName: "Email",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "Email is required.",
+          }
+        },
+        password: {
+          name: "password",
+          displayName: "Password",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "Password is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "void",
+        role: "value",
+      },
+    },
+    logout: {
+      name: "logout",
+      displayName: "Logout",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "void",
+        role: "value",
+      },
+    },
+    createAccount: {
+      name: "createAccount",
+      displayName: "Create Account",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        name: {
+          name: "name",
+          displayName: "Name",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "Name is required.",
+          }
+        },
+        email: {
+          name: "email",
+          displayName: "Email",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "Email is required.",
+          }
+        },
+        password: {
+          name: "password",
+          displayName: "Password",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "Password is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "void",
+        role: "value",
+      },
+    },
+    changePassword: {
+      name: "changePassword",
+      displayName: "Change Password",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        currentPassword: {
+          name: "currentPassword",
+          displayName: "Current Password",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "Current Password is required.",
+          }
+        },
+        newPassword: {
+          name: "newPassword",
+          displayName: "New Password",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "New Password is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "void",
+        role: "value",
+      },
+    },
+    isLoggedIn: {
+      name: "isLoggedIn",
+      displayName: "Is Logged In",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "void",
+        role: "value",
+      },
+    },
+  },
+}
 
 interface AppDomain extends Domain {
   enums: {
@@ -280,6 +421,8 @@ interface AppDomain extends Domain {
     UserStats: typeof UserStats
   }
   services: {
+    GameService: typeof GameService
+    LoginService: typeof LoginService
   }
 }
 
