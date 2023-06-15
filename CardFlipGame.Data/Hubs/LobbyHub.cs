@@ -21,15 +21,14 @@ public class LobbbyHub : Hub
         await Clients.All.SendAsync("gameLobbies", JoinableGames().ToList());
     }
 
-    public async Task CreateGame(string userId, int queueBonus)
+    public async Task CreateGame()
     {
-        _db.RaceGames.Add(new RaceGame()
-        {
-            PlayerOneId = userId,
-            QueueBonus = queueBonus
-        });
-        _db.SaveChanges();
         await Clients.All.SendAsync("gameLobbies", JoinableGames().ToList());
+    }
+    public async Task GetMyGame(string userId)
+    {
+        var game = _db.RaceGames.FirstOrDefault(x => x.PlayerOneId == userId || x.PlayerTwoId == userId);
+        await Clients.All.SendAsync($"myGame-{userId}", game);
     }
 
     public async Task JoinGame(int gameId, string userId) {
@@ -38,7 +37,7 @@ public class LobbbyHub : Hub
             join.PlayerTwoId = userId;
             _db.SaveChanges();
         }
-        await Clients.All.SendAsync($"gameLobbies-P2Joined-{gameId}", true);
+        await Clients.All.SendAsync($"gameLobbies-P2Joined-{gameId}", join);
     }
 
     public async Task RemoveGame(int gameId)

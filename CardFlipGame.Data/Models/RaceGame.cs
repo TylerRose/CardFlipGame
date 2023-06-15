@@ -23,5 +23,5 @@ public class RaceGame
     public bool IsComplete { get; set; }
 
     [NotMapped]
-    public bool CanJoin => PlayerOneId != null && PlayerTwoId != null;
+    public bool CanJoin => PlayerOneId == null || PlayerTwoId == null;
 }

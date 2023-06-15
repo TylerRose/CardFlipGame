@@ -42,19 +42,14 @@ export class FlipGame {
     this.cards.splice(0);
     const icons = this.iconMachine.getIcons(this.difficulty.valueOf());
     const colors = this.colorMachine.getColors(this.difficulty.valueOf());
+    let cardId = 0;
     for (let i = 0; i < icons.length; i++) {
       const icon = icons.at(i)!;
       const color = colors.at(i)!;
-      this.cards.push({ icon, color, active: false, matched: false });
-      this.cards.push({ icon, color, active: false, matched: false });
-    }
-    const icons = this.iconMachine.getIcons(this.difficulty);
-    let cardId = 0;
-    icons.forEach((icon) => {
-      this.cards.push({cardId: cardId, icon: icon, active: false, matched: false });
-      this.cards.push({cardId: cardId+1, icon: icon, active: false, matched: false });
+      this.cards.push({cardId: cardId,    icon, color, active: false, matched: false });
+      this.cards.push({cardId: cardId+1,  icon, color, active: false, matched: false });
       cardId += 2;
-    });
+    }
     this.cards = this.cards.sort(() => Math.random() - 0.5);
   }
   checkGameState() {

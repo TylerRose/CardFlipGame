@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 namespace CardFlipGame.Data.Hubs;
 public class RaceGameHub : Hub
 {
+    public async Task SetGameBoard(int gameId, List<int> idOrder, List<string> icons)
+    {
+        await Clients.All.SendAsync($"raceGame-Init-{gameId}", idOrder);
+    }
     public async Task UpdateGameState(int gameId, int points, List<int> playerQueue, List<int> matched)
     {
         await Clients.All.SendAsync($"raceGame-State-{gameId}", points, playerQueue, matched);
