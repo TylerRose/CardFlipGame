@@ -55,7 +55,7 @@
               <v-icon
                 v-if="userGame.$save.wasSuccessful"
                 class="fas fa-check start"
-                color="green"
+                color="white"
               />
               Save Game
             </v-btn>
