@@ -1,4 +1,4 @@
-import {IconMachine} from "./iconMachine";
+import { IconMachine } from "./iconMachine";
 
 export enum Difficulty {
   Noob = 2,
@@ -38,25 +38,14 @@ export class FlipGame {
       this.cards.push({ icon, active: false, matched: false });
       this.cards.push({ icon, active: false, matched: false });
     });
-    this.shuffleCards();
-  }
-
-  shuffleCards() {
     this.cards = this.cards.sort(() => Math.random() - 0.5);
   }
 
   checkGameState() {
-    this.isGameOver = this.cards.filter((x) => !x.matched).length === 0;
-    if (this.isGameOver) {
+    if (this.cards.filter((x) => x.matched === false).length === 0) {
+      this.isGameOver = true;
       clearInterval(this.timerId);
-      this.revealAllCards();
     }
-  }
-
-  revealAllCards() {
-    this.cards.forEach((x) => {
-      x.active = true;
-    });
   }
 
   flip(card: Card) {
@@ -66,8 +55,8 @@ export class FlipGame {
         this.timer++;
       }, 1000);
     }
-    if (card.active) return;
 
+    if (card.active) return;
     const activeCards = this.cards.filter((x) => x.active);
     if (activeCards.length === 2) return;
     if (activeCards.length === 1) {
