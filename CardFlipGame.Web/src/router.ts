@@ -25,6 +25,11 @@ export default createRouter({
       component: () => import("./views/Login.vue"),
     },
     {
+      path: "/stats",
+      name: "stats",
+      component: () => import("./views/Stats.vue"),
+    },
+    {
       path: "/coalesce-example",
       name: "coalesce-example",
       component: () => import("./views/CoalesceExample.vue"),

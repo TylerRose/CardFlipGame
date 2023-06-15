@@ -61,6 +61,12 @@
               />
               Save Game
             </v-btn>
+            <router-link v-if="isLoggedIn" to="/stats">
+              <v-btn class="mb-1 ml-4" color="orange">
+                <v-icon class="fas fa-address-book" start />
+                View Stats
+              </v-btn>
+            </router-link>
             <router-link v-else to="/login">
               Please log in to save games
             </router-link>
