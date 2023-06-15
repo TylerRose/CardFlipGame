@@ -20,6 +20,17 @@ export default createRouter({
       component: () => import("./views/Play.vue"),
     },
     {
+      path: "/findracegame",
+      name: "race lobbies",
+      component: () => import("./views/RaceGameLobby.vue"),
+    },
+    {
+      path: "/playrace/:id",
+      name: "PlayRace",
+      component: () => import("./views/PlayRace.vue"),
+      props: (r) => ({raceGameId : +r.params.id}),
+    },
+    {
       path: "/login",
       name: "login",
       component: () => import("./views/Login.vue"),

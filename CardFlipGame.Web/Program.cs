@@ -15,6 +15,7 @@ using CardFlipGame.Data.Services;
 using CardFlipGame.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using CardFlipGame.Data.Hubs;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -31,6 +32,7 @@ builder.Logging
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddEnvironmentVariables();
+builder.Services.AddSignalR();
 
 #region Configure Services
 
@@ -159,6 +161,9 @@ app.MapFallbackToController("Index", "Home");
 using (var scope = app.Services.CreateScope())
 {
     var serviceScope = scope.ServiceProvider;
+
+    app.MapHub<LobbbyHub>("/lobbyHub");
+    app.MapHub<RaceGameHub>("/raceGameHub");
 
     // Run database migrations.
     using var db = serviceScope.GetRequiredService<AppDbContext>();

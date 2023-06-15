@@ -123,6 +123,102 @@ export const ApplicationUser = domain.types.ApplicationUser = {
   dataSources: {
   },
 }
+export const RaceGame = domain.types.RaceGame = {
+  name: "RaceGame",
+  displayName: "Race Game",
+  get displayProp() { return this.props.raceGameId }, 
+  type: "model",
+  controllerRoute: "RaceGame",
+  get keyProp() { return this.props.raceGameId }, 
+  behaviorFlags: 7 as BehaviorFlags,
+  props: {
+    raceGameId: {
+      name: "raceGameId",
+      displayName: "Race Game Id",
+      type: "number",
+      role: "primaryKey",
+      hidden: 3 as HiddenAreas,
+    },
+    playerOneId: {
+      name: "playerOneId",
+      displayName: "Player One Id",
+      type: "string",
+      role: "foreignKey",
+      get principalKey() { return (domain.types.ApplicationUser as ModelType).props.id as PrimaryKeyProperty },
+      get principalType() { return (domain.types.ApplicationUser as ModelType) },
+      get navigationProp() { return (domain.types.RaceGame as ModelType).props.playerOne as ModelReferenceNavigationProperty },
+      hidden: 3 as HiddenAreas,
+      rules: {
+        required: val => (val != null && val !== '') || "Player One is required.",
+      }
+    },
+    playerOne: {
+      name: "playerOne",
+      displayName: "Player One",
+      type: "model",
+      get typeDef() { return (domain.types.ApplicationUser as ModelType) },
+      role: "referenceNavigation",
+      get foreignKey() { return (domain.types.RaceGame as ModelType).props.playerOneId as ForeignKeyProperty },
+      get principalKey() { return (domain.types.ApplicationUser as ModelType).props.id as PrimaryKeyProperty },
+      dontSerialize: true,
+    },
+    playerTwoId: {
+      name: "playerTwoId",
+      displayName: "Player Two Id",
+      type: "string",
+      role: "foreignKey",
+      get principalKey() { return (domain.types.ApplicationUser as ModelType).props.id as PrimaryKeyProperty },
+      get principalType() { return (domain.types.ApplicationUser as ModelType) },
+      get navigationProp() { return (domain.types.RaceGame as ModelType).props.playerTwo as ModelReferenceNavigationProperty },
+      hidden: 3 as HiddenAreas,
+    },
+    playerTwo: {
+      name: "playerTwo",
+      displayName: "Player Two",
+      type: "model",
+      get typeDef() { return (domain.types.ApplicationUser as ModelType) },
+      role: "referenceNavigation",
+      get foreignKey() { return (domain.types.RaceGame as ModelType).props.playerTwoId as ForeignKeyProperty },
+      get principalKey() { return (domain.types.ApplicationUser as ModelType).props.id as PrimaryKeyProperty },
+      dontSerialize: true,
+    },
+    player1Score: {
+      name: "player1Score",
+      displayName: "Player1 Score",
+      type: "number",
+      role: "value",
+    },
+    player2Score: {
+      name: "player2Score",
+      displayName: "Player2 Score",
+      type: "number",
+      role: "value",
+    },
+    queueBonus: {
+      name: "queueBonus",
+      displayName: "Queue Bonus",
+      type: "number",
+      role: "value",
+    },
+    isComplete: {
+      name: "isComplete",
+      displayName: "Is Complete",
+      type: "boolean",
+      role: "value",
+    },
+    canJoin: {
+      name: "canJoin",
+      displayName: "Can Join",
+      type: "boolean",
+      role: "value",
+      dontSerialize: true,
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
 export const UserGame = domain.types.UserGame = {
   name: "UserGame",
   displayName: "User Game",
@@ -440,6 +536,7 @@ interface AppDomain extends Domain {
   }
   types: {
     ApplicationUser: typeof ApplicationUser
+    RaceGame: typeof RaceGame
     UserGame: typeof UserGame
     UserStats: typeof UserStats
   }

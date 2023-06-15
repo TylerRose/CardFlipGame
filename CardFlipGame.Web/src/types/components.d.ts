@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     GameMenu: typeof import('./../components/GameMenu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SpeedGameBoard: typeof import('./../components/SpeedGameBoard.vue')['default']
     TimerDisplay: typeof import('./../components/TimerDisplay.vue')['default']
     VAlert: typeof import('vuetify/components')['VAlert']
     VApp: typeof import('vuetify/components')['VApp']

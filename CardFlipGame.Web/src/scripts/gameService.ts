@@ -9,9 +9,11 @@ export enum Difficulty {
 }
 
 export interface Card {
+  cardId: number;
   icon: string;
   color: string;
   active: boolean;
+  activeBy?: number;
   matched: boolean;
 }
 
@@ -29,7 +31,6 @@ export class FlipGame {
     this.difficulty = difficulty;
     this.restartGame();
   }
-
   restartGame() {
     this.isGameOver = false;
     this.timer = 0;
@@ -41,17 +42,18 @@ export class FlipGame {
     this.cards.splice(0);
     const icons = this.iconMachine.getIcons(this.difficulty.valueOf());
     const colors = this.colorMachine.getColors(this.difficulty.valueOf());
+    let cardId = 0;
     for (let i = 0; i < icons.length; i++) {
       const icon = icons.at(i)!;
       const color = colors.at(i)!;
-      this.cards.push({ icon, color, active: false, matched: false });
-      this.cards.push({ icon, color, active: false, matched: false });
+      this.cards.push({cardId: cardId,    icon, color, active: false, matched: false });
+      this.cards.push({cardId: cardId+1,  icon, color, active: false, matched: false });
+      cardId += 2;
     }
     this.cards = this.cards.sort(() => Math.random() - 0.5);
   }
-
   checkGameState() {
-    if (this.cards.filter((x) => x.matched === false).length === 0) {
+    if (this.cards.filter((x) => !x.matched).length === 0) {
       this.isGameOver = true;
       clearInterval(this.timerId);
     }
