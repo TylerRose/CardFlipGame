@@ -133,7 +133,7 @@ async function storeGameResult() {
     }
     userGame.durationInSeconds = game.timer;
     userGame.numberOfMoves = game.numberOfMoves;
-    userGame.$save();
+    await userGame.$save();
     console.log("Game saved");
   } catch (e) {
     console.log(e);
