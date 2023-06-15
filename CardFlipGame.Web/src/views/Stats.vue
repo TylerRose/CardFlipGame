@@ -37,15 +37,15 @@
             </tr>
             <tr>
               <td>Average Easy Duration</td>
-              <td>{{ stats.averageDurationEasy }}</td>
+              <td>{{ stats.averageDurationEasy + "s" }}</td>
             </tr>
             <tr>
               <td>Average Medium Duration</td>
-              <td>{{ stats.averageDurationMedium }}</td>
+              <td>{{ stats.averageDurationMedium + "s" }}</td>
             </tr>
             <tr>
               <td>Average Hard Duration</td>
-              <td>{{ stats.averageDurationHard }}</td>
+              <td>{{ stats.averageDurationHard + "s" }}</td>
             </tr>
           </tbody>
         </v-table>
