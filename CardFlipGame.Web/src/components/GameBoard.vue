@@ -74,7 +74,7 @@
           <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
           </v-btn>
-          <v-btn color="teal" @click="game.restartGame()" class="ma-2">
+          <v-btn color="teal" @click="restartGame()" class="ma-2">
             New Game
           </v-btn>
         </v-card-text>
@@ -158,6 +158,11 @@ async function storeGameResult() {
     console.log(e);
     console.log("User not logged in");
   }
+}
+
+function restartGame() {
+  game.restartGame();
+  userGame.$save.wasSuccessful = false;
 }
 
 // Show the difficulty selection menu when the user navigates back.
