@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height pa-1" fluid>
-    <TimerDisplay :milliseconds="game.timer * 1000" class="timer" />
+    <TimerDisplay :milliseconds="game.timer * 1000" class="timer"/>
     <vue-flip
       v-model="card.active"
       :width="cardSize"
@@ -28,7 +28,7 @@
           color="teal"
           class="align-center justify-center rounded-lg w-100 h-100 d-flex"
         >
-          <v-icon class="icon-size" :icon="game.cards[index].icon" />
+          <v-icon class="icon-size" :icon="game.cards[index].icon"/>
         </v-sheet>
       </template>
     </vue-flip>
@@ -40,6 +40,20 @@
         <v-card-text class="pa-2">
           <div class="mb-2">
             {{ gameTimeMessage }}
+          </div>
+          <div>
+            <v-btn
+              v-if="isLoggedIn"
+              @click="storeGameResult()"
+              :disabled="userGame.$save.wasSuccessful"
+              :loading="userGame.$save.isLoading"
+            >
+              <v-icon v-if="userGame.$save.wasSuccessful" class="fas fa-check start" color="green"/>
+              Save Game
+            </v-btn>
+            <router-link v-else to="/login">
+              Please log in to save games
+            </router-link>
           </div>
           <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
@@ -56,7 +70,13 @@
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
 import {Difficulty, FlipGame} from "@/scripts/gameService";
-import { VueFlip } from "vue-flip";
+import {VueFlip} from "vue-flip";
+import {
+  ApplicationUserViewModel,
+  LoginServiceViewModel,
+  UserGameViewModel,
+} from "@/viewmodels.g";
+import {ApplicationUser} from "@/models.g";
 import TimerDisplay from "@/components/TimerDisplay.vue";
 
 const emit = defineEmits(["stopPlaying"]);
@@ -79,6 +99,47 @@ const gameTimeMessage = computed(() => {
   }
   return `You beat the game in ${seconds} seconds.`;
 });
+
+const loginService = new LoginServiceViewModel();
+const userGame = new UserGameViewModel();
+
+const isLoggedIn = ref(false);
+loginService.isLoggedIn().then(() => {
+  isLoggedIn.value = true;
+}).catch(() => {
+  isLoggedIn.value = false;
+})
+
+async function storeGameResult() {
+  try {
+    await loginService.isLoggedIn();
+    var user: ApplicationUser = (await loginService.getUserInfo()).data.object!;
+    var applicationUser = new ApplicationUserViewModel(user);
+    userGame.userId = user.id;
+    userGame.user = applicationUser;
+
+    switch (props.difficulty) {
+      case Difficulty.Easy:
+        userGame.difficulty = 1;
+        break;
+      case Difficulty.Medium:
+        userGame.difficulty = 2;
+        break;
+      case Difficulty.Hard:
+        userGame.difficulty = 3;
+        break;
+      default:
+        userGame.difficulty = 1;
+    }
+    userGame.durationInSeconds = game.timer;
+    userGame.numberOfMoves = game.numberOfMoves;
+    await userGame.$save();
+    console.log("Game saved");
+  } catch (e) {
+    console.log(e);
+    console.log("User not logged in");
+  }
+}
 
 // Show the difficulty selection menu when the user navigates back.
 onMounted(() => {

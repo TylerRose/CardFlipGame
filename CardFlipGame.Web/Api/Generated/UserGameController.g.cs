@@ -20,54 +20,54 @@ using System.Threading.Tasks;
 
 namespace CardFlipGame.Web.Api
 {
-    [Route("api/ApplicationUser")]
+    [Route("api/UserGame")]
     [Authorize]
     [ServiceFilter(typeof(IApiActionFilter))]
-    public partial class ApplicationUserController
-        : BaseApiController<CardFlipGame.Data.Models.ApplicationUser, ApplicationUserDtoGen, CardFlipGame.Data.AppDbContext>
+    public partial class UserGameController
+        : BaseApiController<CardFlipGame.Data.Models.UserGame, UserGameDtoGen, CardFlipGame.Data.AppDbContext>
     {
-        public ApplicationUserController(CrudContext<CardFlipGame.Data.AppDbContext> context) : base(context)
+        public UserGameController(CrudContext<CardFlipGame.Data.AppDbContext> context) : base(context)
         {
-            GeneratedForClassViewModel = context.ReflectionRepository.GetClassViewModel<CardFlipGame.Data.Models.ApplicationUser>();
+            GeneratedForClassViewModel = context.ReflectionRepository.GetClassViewModel<CardFlipGame.Data.Models.UserGame>();
         }
 
         [HttpGet("get/{id}")]
         [Authorize]
-        public virtual Task<ItemResult<ApplicationUserDtoGen>> Get(
-            string id,
+        public virtual Task<ItemResult<UserGameDtoGen>> Get(
+            int id,
             DataSourceParameters parameters,
-            IDataSource<CardFlipGame.Data.Models.ApplicationUser> dataSource)
+            IDataSource<CardFlipGame.Data.Models.UserGame> dataSource)
             => GetImplementation(id, parameters, dataSource);
 
         [HttpGet("list")]
         [Authorize]
-        public virtual Task<ListResult<ApplicationUserDtoGen>> List(
+        public virtual Task<ListResult<UserGameDtoGen>> List(
             ListParameters parameters,
-            IDataSource<CardFlipGame.Data.Models.ApplicationUser> dataSource)
+            IDataSource<CardFlipGame.Data.Models.UserGame> dataSource)
             => ListImplementation(parameters, dataSource);
 
         [HttpGet("count")]
         [Authorize]
         public virtual Task<ItemResult<int>> Count(
             FilterParameters parameters,
-            IDataSource<CardFlipGame.Data.Models.ApplicationUser> dataSource)
+            IDataSource<CardFlipGame.Data.Models.UserGame> dataSource)
             => CountImplementation(parameters, dataSource);
 
         [HttpPost("save")]
         [Authorize]
-        public virtual Task<ItemResult<ApplicationUserDtoGen>> Save(
-            [FromForm] ApplicationUserDtoGen dto,
+        public virtual Task<ItemResult<UserGameDtoGen>> Save(
+            [FromForm] UserGameDtoGen dto,
             [FromQuery] DataSourceParameters parameters,
-            IDataSource<CardFlipGame.Data.Models.ApplicationUser> dataSource,
-            IBehaviors<CardFlipGame.Data.Models.ApplicationUser> behaviors)
+            IDataSource<CardFlipGame.Data.Models.UserGame> dataSource,
+            IBehaviors<CardFlipGame.Data.Models.UserGame> behaviors)
             => SaveImplementation(dto, parameters, dataSource, behaviors);
 
         [HttpPost("delete/{id}")]
         [Authorize]
-        public virtual Task<ItemResult<ApplicationUserDtoGen>> Delete(
-            string id,
-            IBehaviors<CardFlipGame.Data.Models.ApplicationUser> behaviors,
-            IDataSource<CardFlipGame.Data.Models.ApplicationUser> dataSource)
+        public virtual Task<ItemResult<UserGameDtoGen>> Delete(
+            int id,
+            IBehaviors<CardFlipGame.Data.Models.UserGame> behaviors,
+            IDataSource<CardFlipGame.Data.Models.UserGame> dataSource)
             => DeleteImplementation(id, new DataSourceParameters(), dataSource, behaviors);
     }
 }

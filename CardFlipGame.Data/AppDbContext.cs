@@ -7,6 +7,7 @@ namespace CardFlipGame.Data;
 public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
     public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
+    public DbSet<UserGame> UserGames => Set<UserGame>();
 
     public AppDbContext()
     {

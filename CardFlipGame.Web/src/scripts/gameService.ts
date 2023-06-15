@@ -22,6 +22,7 @@ export class FlipGame {
   difficulty: Difficulty = Difficulty.Easy;
   timer: number = 0;
   timerId: any;
+  numberOfMoves: number = 0;
 
   constructor(difficulty: Difficulty = Difficulty.Easy) {
     this.difficulty = difficulty;
@@ -31,6 +32,7 @@ export class FlipGame {
   restartGame() {
     this.isGameOver = false;
     this.timer = 0;
+    this.numberOfMoves = 0;
     this.generateCards();
   }
 
@@ -68,6 +70,7 @@ export class FlipGame {
       if (prev != undefined && card.icon === prev.icon)
         this.flipCardsBack(true);
       this.flipCardsBack();
+      this.numberOfMoves++;
       return;
     }
     card.active = !card.active;

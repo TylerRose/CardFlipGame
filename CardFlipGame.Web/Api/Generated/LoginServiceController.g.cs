@@ -154,5 +154,22 @@ namespace CardFlipGame.Web.Api
             var _result = new ItemResult(_methodResult);
             return _result;
         }
+
+        /// <summary>
+        /// Method: GetUserInfo
+        /// </summary>
+        [HttpPost("GetUserInfo")]
+        [Authorize]
+        public virtual ItemResult<ApplicationUserDtoGen> GetUserInfo()
+        {
+            IncludeTree includeTree = null;
+            var _mappingContext = new MappingContext(User);
+            var _methodResult = Service.GetUserInfo(
+                User
+            );
+            var _result = new ItemResult<ApplicationUserDtoGen>(_methodResult);
+            _result.Object = Mapper.MapToDto<CardFlipGame.Data.Models.ApplicationUser, ApplicationUserDtoGen>(_methodResult.Object, _mappingContext, includeTree ?? _methodResult.IncludeTree);
+            return _result;
+        }
     }
 }
