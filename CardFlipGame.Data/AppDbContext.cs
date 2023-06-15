@@ -8,6 +8,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
     public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
     public DbSet<UserGame> UserGames => Set<UserGame>();
+    public DbSet<RaceGame> RaceGames => Set<RaceGame>();
 
     public AppDbContext()
     {

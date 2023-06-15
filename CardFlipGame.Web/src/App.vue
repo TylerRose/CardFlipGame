@@ -57,6 +57,15 @@
           </template>
           <v-list-item-title> Play Game </v-list-item-title>
         </v-list-item>
+
+        <v-list-item link to="/findracegame">
+          <template #prepend>
+            <v-icon>fas fa-flag-checkered</v-icon>
+          </template>
+          <v-list-item-title> Find Race Game </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link to="/login">
         <v-list-item v-if="isLoggedIn" link to="/stats">
           <template #prepend>
             <v-icon>fas fa-address-book</v-icon>

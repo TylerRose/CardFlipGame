@@ -38,6 +38,37 @@ export class ApplicationUser {
 }
 
 
+export interface RaceGame extends Model<typeof metadata.RaceGame> {
+  raceGameId: number | null
+  playerOneId: string | null
+  playerOne: ApplicationUser | null
+  playerTwoId: string | null
+  playerTwo: ApplicationUser | null
+  player1Score: number | null
+  player2Score: number | null
+  queueBonus: number | null
+  isComplete: boolean | null
+  canJoin: boolean | null
+}
+export class RaceGame {
+  
+  /** Mutates the input object and its descendents into a valid RaceGame implementation. */
+  static convert(data?: Partial<RaceGame>): RaceGame {
+    return convertToModel(data || {}, metadata.RaceGame) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid RaceGame implementation. */
+  static map(data?: Partial<RaceGame>): RaceGame {
+    return mapToModel(data || {}, metadata.RaceGame) 
+  }
+  
+  /** Instantiate a new RaceGame, optionally basing it on the given data. */
+  constructor(data?: Partial<RaceGame> | {[k: string]: any}) {
+    Object.assign(this, RaceGame.map(data || {}));
+  }
+}
+
+
 export interface UserGame extends Model<typeof metadata.UserGame> {
   userGameId: number | null
   userId: string | null

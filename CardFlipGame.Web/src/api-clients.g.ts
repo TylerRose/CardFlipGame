@@ -8,6 +8,11 @@ export class ApplicationUserApiClient extends ModelApiClient<$models.Application
 }
 
 
+export class RaceGameApiClient extends ModelApiClient<$models.RaceGame> {
+  constructor() { super($metadata.RaceGame) }
+}
+
+
 export class UserGameApiClient extends ModelApiClient<$models.UserGame> {
   constructor() { super($metadata.UserGame) }
 }

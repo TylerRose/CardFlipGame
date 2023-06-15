@@ -37,6 +37,34 @@ export class ApplicationUserListViewModel extends ListViewModel<$models.Applicat
 }
 
 
+export interface RaceGameViewModel extends $models.RaceGame {
+  raceGameId: number | null;
+  playerOneId: string | null;
+  playerOne: ApplicationUserViewModel | null;
+  playerTwoId: string | null;
+  playerTwo: ApplicationUserViewModel | null;
+  player1Score: number | null;
+  player2Score: number | null;
+  queueBonus: number | null;
+  isComplete: boolean | null;
+  canJoin: boolean | null;
+}
+export class RaceGameViewModel extends ViewModel<$models.RaceGame, $apiClients.RaceGameApiClient, number> implements $models.RaceGame  {
+  
+  constructor(initialData?: DeepPartial<$models.RaceGame> | null) {
+    super($metadata.RaceGame, new $apiClients.RaceGameApiClient(), initialData)
+  }
+}
+defineProps(RaceGameViewModel, $metadata.RaceGame)
+
+export class RaceGameListViewModel extends ListViewModel<$models.RaceGame, $apiClients.RaceGameApiClient, RaceGameViewModel> {
+  
+  constructor() {
+    super($metadata.RaceGame, new $apiClients.RaceGameApiClient())
+  }
+}
+
+
 export interface UserGameViewModel extends $models.UserGame {
   userGameId: number | null;
   userId: string | null;
@@ -156,10 +184,12 @@ export class LoginServiceViewModel extends ServiceViewModel<typeof $metadata.Log
 
 const viewModelTypeLookup = ViewModel.typeLookup = {
   ApplicationUser: ApplicationUserViewModel,
+  RaceGame: RaceGameViewModel,
   UserGame: UserGameViewModel,
 }
 const listViewModelTypeLookup = ListViewModel.typeLookup = {
   ApplicationUser: ApplicationUserListViewModel,
+  RaceGame: RaceGameListViewModel,
   UserGame: UserGameListViewModel,
 }
 const serviceViewModelTypeLookup = ServiceViewModel.typeLookup = {
