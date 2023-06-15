@@ -1,5 +1,6 @@
 <template>
   <v-container class="fill-height pa-1" fluid>
+    <TimerDisplay :milliseconds="game.timer * 1000" class="timer" />
     <vue-flip
       v-model="card.active"
       :width="cardSize"
@@ -37,6 +38,9 @@
           <v-card-title>You won! Great job!</v-card-title>
         </v-card-item>
         <v-card-text class="pa-2">
+          <div class="mb-2">
+            {{ gameTimeMessage }}
+          </div>
           <v-btn @click="storeGameResult()"> Save Game </v-btn>
           <v-btn color="teal" @click="emit('stopPlaying')" class="ma-2">
             Change Difficulty
@@ -60,6 +64,7 @@ import {
   UserGameViewModel,
 } from "@/viewmodels.g";
 import { ApplicationUser } from "@/models.g";
+import TimerDisplay from "@/components/TimerDisplay.vue";
 
 const emit = defineEmits(["stopPlaying"]);
 
@@ -72,6 +77,15 @@ const props = defineProps({
 
 const cardSize = 100 / Math.sqrt(props.difficulty * 2) + "%";
 const game = reactive(new FlipGame(props.difficulty));
+
+const gameTimeMessage = computed(() => {
+  const minutes = Math.floor(game.timer / 60);
+  const seconds = game.timer % 60;
+  if (minutes > 0) {
+    return `You beat the game in ${minutes} minutes and ${seconds} seconds.`;
+  }
+  return `You beat the game in ${seconds} seconds.`;
+});
 
 const loginService = new LoginServiceViewModel();
 const userGame = new UserGameViewModel();

@@ -27,14 +27,28 @@ const vuetify = createVuetify({
     sets: { fa },
   },
   theme: {
+    defaultTheme: 'light',
     themes: {
+      dark: {
+        colors: {
+          teal: '#007070',
+          red: '#BB1111',
+          green: '#3C9F40',
+          blue: '#0176D3',
+          orange: '#Ef7800'
+        }
+      },
       light: {
         colors: {
-          primary: "#127815",
-        },
-      },
-    },
-  },
+          teal: '#009090',
+          red: '#FF3333',
+          green: '#4CAF50',
+          blue: '#2196F3',
+          orange: '#ff9800'
+        }
+      }
+    }
+  }
 });
 
 // SETUP: coalesce-vue
