@@ -72,7 +72,14 @@ async function getUserStats() {
     var user: ApplicationUser = (await loginService.getUserInfo()).data.object!;
     var userGames = await gameService.getUserStats(user.id);
 
-    stats = userGames.data.object!;
+    const newStats = userGames.data.object!;
+    stats.user = newStats.user;
+    stats.averageMovesEasy = newStats.averageMovesEasy;
+    stats.averageMovesMedium = newStats.averageMovesMedium;
+    stats.averageMovesHard = newStats.averageMovesHard;
+    stats.averageDurationEasy = newStats.averageDurationEasy;
+    stats.averageDurationMedium = newStats.averageDurationMedium;
+    stats.averageDurationHard = newStats.averageDurationHard;
     console.log("Successfully retrieved user stats");
   } catch (e) {
     console.log(e);
